@@ -11,6 +11,12 @@ class KoronaScript():
 
     def __init__(self, **parameters): # global parameters
         self._module_list = []
+        self._config = global_spec
+        for k in parameters:
+            if k not in global_spec:
+                print(f'Unknown global parameter "{k}" - aborting')
+                exit -1
+            self._config[k] = parameters[k]
 
     def add(self, module):
         '''Add a module to the script'''
@@ -18,11 +24,21 @@ class KoronaScript():
         return self
 
     def write(self, filepath=None):
-        '''Write the cds and xxx files'''
+        '''Write the cds and cfs files'''
         if filepath is None:
             for m in self._module_list:
                 print(m._config)
         else:
+            print('<?xml version="1.0" encoding="UTF-8"?>')
+            print('<ConfigFiles context="Korona">')
+            print('<parameter name="ModuleConfiguration" ref="CfsDirectory">CW.cds</parameter>')
+            for k,v in self._config.items():
+                if v is None:
+                    print(f'    <parameter name="{k}"/>')
+                else:
+                    print(f'    <parameter name="{k}">{v}</parameter>')
+
+            print('----')
             print('<?xml version="1.0" encoding="UTF-8"?>')
             print()
             print('<ModuleContainer version="3">')
@@ -57,30 +73,38 @@ class KoronaModule():
         print(f'  <module name="{myname}">')
         print('    <parameters>')
         for k in self._config:
-            print(f'      <parameter name="{k}">{self._config[k]}</parameter>')
+            if self._config[k] is None:
+                print(f'      <parameter name="{k}"/>')
+            else:
+                print(f'      <parameter name="{k}">{self._config[k]}</parameter>')
         print('    </parameters>')
         print('  </module>')
 
 # Example module - can probably be generated automatically?
 class NetCdfWriter(KoronaModule):
     '''Korona module to write acoustic data to NetCDF file format'''
-    
     def __init__(self, **parameters):
-        # instantiate base class with correct setup, then
         super().__init__('NetCdfWriter', **parameters)
+
+class ChannelDataRemoval(KoronaModule):
+    '''Korona module to write acoustic data to NetCDF file format'''
+    def __init__(self, **parameters):
+        super().__init__('ChannelDataRemoval', **parameters)
         
-global_conf = {}
-#   <parameter name="ModuleConfiguration" ref="CfsDirectory">CW.cds</parameter>
-#   <parameter name="Categorization"/>
-#   <parameter name="HorizontalTransducerOffsets"/>
-#   <parameter name="VerticalTransducerOffsets"/>
-#   <parameter name="TransducerRanges"/>
-#   <parameter name="Plankton"/>
-#   <parameter name="BroadbandNotchFilters"/>
-#   <parameter name="PulseCompressionFilters"/>
-#   <parameter name="BroadbandSplitterBands"/>
-#   <parameter name="Towfish"/>
-        
+global_spec = {
+    # 'ModuleConfiguration' : None, # cds file name, attrib 'ref' points to...what?
+    #   <parameter name="ModuleConfiguration" ref="CfsDirectory">CW.cds</parameter>
+    'Categorization' : None,
+    'HorizontalTransducerOffsets' : None,
+    'VerticalTransducerOffsets' : None,
+    'TransducerRanges' : None,
+    'Plankton' : None,
+    'BroadbandNotchFilters' : None,
+    'PulseCompressionFilters' : None,
+    'BroadbandSplitterBands' : None,
+    'Towfish' : None,
+}
+
 # Dictionary of modules with parameters and default values
 # Maybe list allowed values?        
 modules_spec = {
@@ -88,8 +112,8 @@ modules_spec = {
         'Active' : 'true',  # is this valid for all modules?
         'DirName' : 'sv',
         'MainFrequency' : '38',
-        'DeltaRange' : '',
-        'MaxRange' : '',
+        'DeltaRange' : None,
+        'MaxRange' : None,
         'OutputType' : 'SV_AND_ANGLES',
         'WriteAngels' : 'true',
         'FftWindowSize' : '10',
@@ -97,9 +121,9 @@ modules_spec = {
     },
     'ChannelDataRemoval' : {
         'Active' : 'true',
-        'Channels' : '',
-        'ChannelsFromEnd' : '',
-        'Frequencies' : '',
+        'Channels' : None,
+        'ChannelsFromEnd' : None,
+        'Frequencies' : None,
         'KeepSpecified' : 'true'
     }
 }
