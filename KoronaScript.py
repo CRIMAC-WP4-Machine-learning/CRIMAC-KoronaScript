@@ -6,6 +6,11 @@
 #    ks.write(path)
 #    ks.run()
 
+import subprocess
+import tempfile
+import os
+import sys
+
 class KoronaScript():
     '''Construct, store, and run a set of Korona modules'''
 
@@ -23,32 +28,36 @@ class KoronaScript():
         self._module_list.append(module)
         return self
 
-    def write(self, filepath=None):
+    def write(self, cfs=sys.stdout, cds=sys.stdout):
         '''Write the cds and cfs files'''
-        if filepath is None:
-            for m in self._module_list:
-                print(m._config)
-        else:
-            print('<?xml version="1.0" encoding="UTF-8"?>')
-            print('<ConfigFiles context="Korona">')
-            print('<parameter name="ModuleConfiguration" ref="CfsDirectory">CW.cds</parameter>')
-            for k,v in self._config.items():
-                if v is None:
-                    print(f'    <parameter name="{k}"/>')
-                else:
-                    print(f'    <parameter name="{k}">{v}</parameter>')
+        cfs.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        cfs.write('<ConfigFiles context="Korona">\n')
+        cfs.write('<parameter name="ModuleConfiguration" ref="CfsDirectory">CW.cds</parameter>\n')
+        for k,v in self._config.items():
+            if v is None:
+                cfs.write(f'    <parameter name="{k}"/>\n')
+            else:
+                cfs.write(f'    <parameter name="{k}">{v}</parameter>\n')
+        cfs.write('</ConfigFiles>\n')
 
-            print('----')
-            print('<?xml version="1.0" encoding="UTF-8"?>')
-            print()
-            print('<ModuleContainer version="3">')
-            for m in self._module_list:
-                m.to_xml()
-            print('</ModuleContainer>')    
+        cds.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        cds.write('<ModuleContainer version="3">\n')
+        for m in self._module_list:
+            cds.write(m.to_xml())
+        cds.write('</ModuleContainer>\n')
 
     def run(self):
         '''Save the files (to /tmp?) and call Korona to execute them'''
-        pass
+        cds, cdsname = tempfile.mkstemp(suffix='.cds')
+        cfs, cfsname = tempfile.mkstemp(suffix='.cfs')
+        with os.fdopen(cds, 'w') as cdsfd:
+            with os.fdopen(cfs, 'w') as cfsfd:
+                self.write(cfs=cfsfd, cds=cdsfd)
+
+                # Call this program
+                # "$JAVA" $JAVA_OPTS "-Xmx${MAX_MEMORY_MB}m" -classpath "$TOP_INSTALLATION_DIR/lib/jar/*" "-Djava.library.path=$JAVA_LIBRARY_PATH" "-Djna.library.path=$JAVA_LIBRARY_PATH" -XX:-UseGCOverheadLimit -XX:-OmitStackTraceInFastThrow -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain "$@"
+                # subprocess.run(...)
+
 
 class KoronaModule():
     '''Baseclass for modules'''
@@ -69,16 +78,18 @@ class KoronaModule():
 
     def to_xml(self):
         '''Generate XML output'''
+        res = ''
         myname = self._name + 'Module'
-        print(f'  <module name="{myname}">')
-        print('    <parameters>')
+        res += (f'  <module name="{myname}">\n')
+        res += ('    <parameters>\n')
         for k in self._config:
             if self._config[k] is None:
-                print(f'      <parameter name="{k}"/>')
+                res += (f'      <parameter name="{k}"/>\n')
             else:
-                print(f'      <parameter name="{k}">{self._config[k]}</parameter>')
-        print('    </parameters>')
-        print('  </module>')
+                res += (f'      <parameter name="{k}">{self._config[k]}</parameter>\n')
+        res += ('    </parameters>\n')
+        res += ('  </module>\n')
+        return res
 
 # Example module - can probably be generated automatically?
 class NetCdfWriter(KoronaModule):
