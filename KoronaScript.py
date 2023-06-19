@@ -28,11 +28,11 @@ class KoronaScript():
         self._module_list.append(module)
         return self
 
-    def write(self, cfs=sys.stdout, cds=sys.stdout):
+    def write(self, cfs=sys.stdout, cds=sys.stdout, cdsname=None):
         '''Write the cds and cfs files'''
-        cfs.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        cfs.write('<?xml version="1.0" encoding="UTF-8"?>\n\n')
         cfs.write('<ConfigFiles context="Korona">\n')
-        cfs.write('<parameter name="ModuleConfiguration" ref="CfsDirectory">CW.cds</parameter>\n')
+        cfs.write(f'    <parameter name="ModuleConfiguration" ref="CfsDirectory">{cdsname}</parameter>\n')
         for k,v in self._config.items():
             if v is None:
                 cfs.write(f'    <parameter name="{k}"/>\n')
@@ -40,7 +40,7 @@ class KoronaScript():
                 cfs.write(f'    <parameter name="{k}">{v}</parameter>\n')
         cfs.write('</ConfigFiles>\n')
 
-        cds.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        cds.write('<?xml version="1.0" encoding="UTF-8"?>\n\n')
         cds.write('<ModuleContainer version="3">\n')
         for m in self._module_list:
             cds.write(m.to_xml())
@@ -48,11 +48,11 @@ class KoronaScript():
 
     def run(self):
         '''Save the files (to /tmp?) and call Korona to execute them'''
-        cds, cdsname = tempfile.mkstemp(suffix='.cds')
         cfs, cfsname = tempfile.mkstemp(suffix='.cfs')
+        cds, cdsname = tempfile.mkstemp(suffix='.cds')
         with os.fdopen(cds, 'w') as cdsfd:
             with os.fdopen(cfs, 'w') as cfsfd:
-                self.write(cfs=cfsfd, cds=cdsfd)
+                self.write(cfs=cfsfd, cds=cdsfd, cdsname=cdsname)
 
                 # Call this program
                 # "$JAVA" $JAVA_OPTS "-Xmx${MAX_MEMORY_MB}m" -classpath "$TOP_INSTALLATION_DIR/lib/jar/*" "-Djava.library.path=$JAVA_LIBRARY_PATH" "-Djna.library.path=$JAVA_LIBRARY_PATH" -XX:-UseGCOverheadLimit -XX:-OmitStackTraceInFastThrow -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain "$@"
