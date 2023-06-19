@@ -21,7 +21,7 @@ class KoronaScript():
         for k in parameters:
             if k not in global_spec:
                 print(f'Unknown global parameter "{k}" - aborting')
-                exit -1
+                exit(-1)
             self._config[k] = parameters[k]
 
     def add(self, module):
@@ -57,14 +57,18 @@ class KoronaScript():
 
         # if os.getenv('JAVA_HOME'): (...)
         lsss = os.getenv('LSSS')
+        if lsss is None:
+            print('LSSS not specified')
+            exit(-1)
+
         java = shutil.which('java')
         if java is None:
             print('Java not found')
-            exit -1
+            exit(-1)
 
         # "-Xmx${MAX_MEMORY_MB}m" -classpath "$TOP_INSTALLATION_DIR/lib/jar/*" "-Djava.library.path=$JAVA_LIBRARY_PATH" "-Djna.library.path=$JAVA_LIBRARY_PATH" -XX:-UseGCOverheadLimit -XX:-OmitStackTraceInFastThrow -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain "$@"
-        javaopts = f'--classpath {lsss}/lib/jar/* -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain'
-        subprocess.run(java, javaopts, 'batch', '--cfs', cfsname, '--source', src, '--destination', dst)
+        javaopts = [f'--classpath {lsss}/lib/jar/*', '-Dno.marec.incubator=true', 'no.imr.korona.main.KoronaCliMain']
+        subprocess.run([java] + javaopts + ['batch', '--cfs', cfsname, '--source', src, '--destination', dst])
 
 class KoronaModule():
     '''Baseclass for modules'''
@@ -74,13 +78,13 @@ class KoronaModule():
         # check that the module exists
         if name not in modules_spec:
             print(f'Unknown Korona module "{name}" - aborting')
-            exit -1
+            exit(-1)
         self._name = name
         self._config = modules_spec[name]
         for k in parameters:
             if not k in modules_spec[name]:
                 print(f'Parameter "{k}" not valid for Korona module "{name}" - aborting')
-                exit -1
+                exit(-1)
             self._config[k] = parameters[k]
 
     def to_xml(self):
