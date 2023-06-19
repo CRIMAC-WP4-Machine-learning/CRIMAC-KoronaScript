@@ -10,6 +10,7 @@ import subprocess
 import tempfile
 import os
 import sys
+import shutil
 
 class KoronaScript():
     '''Construct, store, and run a set of Korona modules'''
@@ -46,7 +47,7 @@ class KoronaScript():
             cds.write(m.to_xml())
         cds.write('</ModuleContainer>\n')
 
-    def run(self):
+    def run(self, src, dst):
         '''Save the files (to /tmp?) and call Korona to execute them'''
         cfs, cfsname = tempfile.mkstemp(suffix='.cfs')
         cds, cdsname = tempfile.mkstemp(suffix='.cds')
@@ -54,10 +55,16 @@ class KoronaScript():
             with os.fdopen(cfs, 'w') as cfsfd:
                 self.write(cfs=cfsfd, cds=cdsfd, cdsname=cdsname)
 
-                # Call this program
-                # "$JAVA" $JAVA_OPTS "-Xmx${MAX_MEMORY_MB}m" -classpath "$TOP_INSTALLATION_DIR/lib/jar/*" "-Djava.library.path=$JAVA_LIBRARY_PATH" "-Djna.library.path=$JAVA_LIBRARY_PATH" -XX:-UseGCOverheadLimit -XX:-OmitStackTraceInFastThrow -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain "$@"
-                # subprocess.run(...)
+        # if os.getenv('JAVA_HOME'): (...)
+        lsss = os.getenv('LSSS')
+        java = shutil.which('java')
+        if java is None:
+            print('Java not found')
+            exit -1
 
+        # "-Xmx${MAX_MEMORY_MB}m" -classpath "$TOP_INSTALLATION_DIR/lib/jar/*" "-Djava.library.path=$JAVA_LIBRARY_PATH" "-Djna.library.path=$JAVA_LIBRARY_PATH" -XX:-UseGCOverheadLimit -XX:-OmitStackTraceInFastThrow -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain "$@"
+        javaopts = f'--classpath {lsss}/lib/jar/* -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain'
+        subprocess.run(java, javaopts, 'batch', '--cfs', cfsname, '--source', src, '--destination', dst)
 
 class KoronaModule():
     '''Baseclass for modules'''
