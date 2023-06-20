@@ -10,7 +10,6 @@ import subprocess
 import tempfile
 import os
 import sys
-import shutil
 
 class KoronaScript():
     '''Construct, store, and run a set of Korona modules'''
@@ -64,10 +63,7 @@ class KoronaScript():
             exit(-1)
         os.environ['TOP_INSTALLATION_DIR'] = lsss
 
-        java = shutil.which('java')
-        if java is None:
-            print('Java not found')
-            exit(-1)
+        java = lsss+'/jre/bin/java'
 
         # "-Xmx${MAX_MEMORY_MB}m" -classpath "$TOP_INSTALLATION_DIR/lib/jar/*" "-Djava.library.path=$JAVA_LIBRARY_PATH" "-Djna.library.path=$JAVA_LIBRARY_PATH" -XX:-UseGCOverheadLimit -XX:-OmitStackTraceInFastThrow -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain "$@"
         javaopts = ['-classpath', f'{lsss}/lib/jar/*', '-Dno.marec.incubator=true', 'no.imr.korona.main.KoronaCliMain']
