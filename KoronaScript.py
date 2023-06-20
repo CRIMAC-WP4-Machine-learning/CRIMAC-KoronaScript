@@ -60,7 +60,7 @@ class KoronaScript():
         # if os.getenv('JAVA_HOME'): (...)
         lsss = os.getenv('LSSS')
         if lsss is None:
-            print('LSSS not specified')
+            print('LSSS environment variable not specified')
             exit(-1)
 
         java = shutil.which('java')
@@ -70,7 +70,12 @@ class KoronaScript():
 
         # "-Xmx${MAX_MEMORY_MB}m" -classpath "$TOP_INSTALLATION_DIR/lib/jar/*" "-Djava.library.path=$JAVA_LIBRARY_PATH" "-Djna.library.path=$JAVA_LIBRARY_PATH" -XX:-UseGCOverheadLimit -XX:-OmitStackTraceInFastThrow -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain "$@"
         javaopts = [f'--classpath {lsss}/lib/jar/*', '-Dno.marec.incubator=true', 'no.imr.korona.main.KoronaCliMain']
-        subprocess.run([java] + javaopts + ['batch', '--cfs', cfsname, '--source', src, '--destination', dst])
+        res = subprocess.run([java] + javaopts + ['batch', '--cfs', cfsname, '--source', src, '--destination', dst])
+        print(res.stdout)
+        if res.returncode != 0:
+            print('Warning: Java subprocess returned error code {res.returncode}')
+            print('Errors:')
+            print(res.stderr)
 
 class KoronaModule():
     '''Baseclass for modules'''
