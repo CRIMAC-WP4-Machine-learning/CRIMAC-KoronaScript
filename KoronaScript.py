@@ -111,10 +111,10 @@ class KoronaModule():
         return res
 
 # Example module - can probably be generated automatically?
-class NetCdfWriter(KoronaModule):
+class NetcdfWriter(KoronaModule):
     '''Korona module to write acoustic data to NetCDF file format'''
     def __init__(self, **parameters):
-        super().__init__('NetCdfWriter', **parameters)
+        super().__init__('NetcdfWriter', **parameters)
 
 class ChannelDataRemoval(KoronaModule):
     '''Korona module to write acoustic data to NetCDF file format'''
@@ -138,7 +138,7 @@ global_spec = {
 # Dictionary of modules with parameters and default values
 # Maybe list allowed values?        
 modules_spec = {
-    'NetCdfWriter' : {
+    'NetcdfWriter' : {
         'Active' : 'true',  # is this valid for all modules?
         'DirName' : 'sv',
         'MainFrequency' : '38',
