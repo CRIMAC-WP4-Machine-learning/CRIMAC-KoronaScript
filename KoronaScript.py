@@ -43,8 +43,10 @@ class KoronaScript():
 
         cds.write('<?xml version="1.0" encoding="UTF-8"?>\n\n')
         cds.write('<ModuleContainer version="3">\n')
+        cds.write('  <modules>\n')
         for m in self._module_list:
             cds.write(m.to_xml())
+        cds.write('  </modules>\n')
         cds.write('</ModuleContainer>\n')
 
     def run(self, src, dst):
