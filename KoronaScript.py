@@ -99,7 +99,13 @@ class KoronaModule():
         res += ('    <parameters>\n')
         for k in self._config:
             if self._config[k] is None:
-                res += (f'      <parameter name="{k}"/>\n')
+                res += f'      <parameter name="{k}"/>\n'
+            elif isinstance(self._config[k],list):
+                res += f'      <parameter name="{k}">'
+                for v in self._config[k]:
+                    res += str(v)+','
+                res = res[:-1] # remove last comma
+                res += '</parameter>\n'
             else:
                 res += (f'      <parameter name="{k}">{self._config[k]}</parameter>\n')
         res += ('    </parameters>\n')
@@ -113,13 +119,39 @@ class NetcdfWriter(KoronaModule):
         super().__init__('NetcdfWriter', **parameters)
 
 class ChannelDataRemoval(KoronaModule):
-    '''Korona module to write acoustic data to NetCDF file format'''
+    '''Korona module to remove channel data, maybe?'''
     def __init__(self, **parameters):
         super().__init__('ChannelDataRemoval', **parameters)
+
+class ChannelRemoval(KoronaModule):
+    '''Korona module to remove channels?'''
+    def __init__(self, **parameters):
+        super().__init__('ChannelRemoval', **parameters)
+
+class Writer(KoronaModule):
+    '''Korona module to write acoustic data to RAW file format'''
+    def __init__(self, **parameters):
+        super().__init__('Writer', **parameters)
+
+class Comment(KoronaModule):
+    '''Korona module for comments'''
+    def __init__(self, **parameters):
+        super().__init__('Comment', **parameters)
+
+class TemporaryComputationsBegin(KoronaModule):
+    '''Korona module for... something?'''
+    def __init__(self, **parameters):
+        super().__init__('TemporaryComputationsBegin', **parameters)
+
+class TemporaryComputationsEnd(KoronaModule):
+    '''Korona module for... something?'''
+    def __init__(self, **parameters):
+        super().__init__('TemporaryComputationsEnd', **parameters)
         
 global_spec = {
     # 'ModuleConfiguration' : None, # cds file name, attrib 'ref' points to...what?
     #   <parameter name="ModuleConfiguration" ref="CfsDirectory">CW.cds</parameter>
+    # The following are None, or point to xml files (contents unknown)
     'Categorization' : None,
     'HorizontalTransducerOffsets' : None,
     'VerticalTransducerOffsets' : None,
@@ -132,8 +164,16 @@ global_spec = {
 }
 
 # Dictionary of modules with parameters and default values
-# Maybe list allowed values?        
+# Maybe list allowed values?  All modules have a parameter 'active',
+# which can be true, or, presumably, false
 modules_spec = {
+    'Comment' : {
+        'Active' : 'true',
+        'LineBreak' : 'false',
+        'VerticalSpace' : None, # 8
+        'Label' :  None,  # 'CW_0256ms'
+        'Comment' : None
+    },
     'NetcdfWriter' : {
         'Active' : 'true',  # is this valid for all modules?
         'DirName' : 'sv',
@@ -145,11 +185,31 @@ modules_spec = {
         'FftWindowSize' : '10',
         'DeltaFrequency' : '1',
     },
+    'Writer' : {
+        'Active' : 'true',
+        'FileName' : None,
+        'UseRelativeDirectory' : 'true',
+        'RelativeDirectory' : None # 'CW_0256ms'
+    },
     'ChannelDataRemoval' : {
         'Active' : 'true',
         'Channels' : None,
         'ChannelsFromEnd' : None,
         'Frequencies' : None,
         'KeepSpecified' : 'true'
+    },
+    # This is the same as ChannelDataRemoval - why?
+    'ChannelRemoval' : {
+        'Active' : 'true',
+        'Channels' : None, # or list of channels (ints)
+        'ChannelsFromEnd' : None,
+        'Frequencies' : None,
+        'KeepSpecified' : 'true'
+    },
+    'TemporaryComputationsBegin' : {
+        'Active' : 'true'
+    },
+    'TemporaryComputationsEnd' : {
+        'Active' : 'true'
     }
 }
