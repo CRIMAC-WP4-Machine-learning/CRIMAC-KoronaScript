@@ -84,9 +84,14 @@ class KoronaModule():
             print(f'Unknown Korona module "{name}" - aborting')
             exit(-1)
         self._name = name
-        self._config = modules_spec[name]
+        # All modules have this
+        self._config = {'Active' : 'true'}
+        # Add defaults
+        for k,v in modules_spec[name].items():
+            self._config[k] = v
+
         for k in parameters:
-            if not k in modules_spec[name]:
+            if k != 'Active' and not k in modules_spec[name]:
                 print(f'Parameter "{k}" not valid for Korona module "{name}" - aborting')
                 exit(-1)
             self._config[k] = parameters[k]
@@ -185,14 +190,12 @@ global_spec = {
 # which can be true, or, presumably, false
 modules_spec = {
     'Comment' : {
-        'Active' : 'true',
         'LineBreak' : 'false',
         'VerticalSpace' : None, # 8
         'Label' :  None,  # 'CW_0256ms'
         'Comment' : None
     },
     'NetcdfWriter' : {
-        'Active' : 'true',  # is this valid for all modules?
         'DirName' : 'sv',
         'MainFrequency' : '38',
         'DeltaRange' : None,
@@ -203,13 +206,11 @@ modules_spec = {
         'DeltaFrequency' : '1',
     },
     'Writer' : {
-        'Active' : 'true',
         'FileName' : None,
         'UseRelativeDirectory' : 'true',
         'RelativeDirectory' : None # 'CW_0256ms'
     },
     'ChannelDataRemoval' : {
-        'Active' : 'true',
         'Channels' : None,
         'ChannelsFromEnd' : None,
         'Frequencies' : None,
@@ -217,23 +218,18 @@ modules_spec = {
     },
     # This is the same as ChannelDataRemoval - why?
     'ChannelRemoval' : {
-        'Active' : 'true',
         'Channels' : None, # or list of channels (ints)
         'ChannelsFromEnd' : None,
         'Frequencies' : None,
         'KeepSpecified' : 'true'
     },
     'TemporaryComputationsBegin' : {
-        'Active' : 'true'
     },
     'TemporaryComputationsEnd' : {
-        'Active' : 'true'
     },
     'EmptyPingRemoval' : {
-        'Active' : 'true'
     },
     'Tracking' : {
-        'Active' : 'true',
         'TrackerType' : 'SED',
         'kHz' : '333',
         'PlatformMotionType' : 'Floating',
