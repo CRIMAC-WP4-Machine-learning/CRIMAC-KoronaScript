@@ -106,6 +106,12 @@ class KoronaModule():
                     res += str(v)+','
                 res = res[:-1] # remove last comma
                 res += '</parameter>\n'
+            elif isinstance(self._config[k],dict):
+                res += f'      <parameter name="{k}">\n'
+                # Should maybe call recursively?  Can they be lists or dicts?
+                for key,val in self._config[k].items():
+                    res += f'       <parameter name="{key}">{val}</parameter>\n'
+                res +=  '      </parameter>\n'
             else:
                 res += (f'      <parameter name="{k}">{self._config[k]}</parameter>\n')
         res += ('    </parameters>\n')
@@ -147,6 +153,17 @@ class TemporaryComputationsEnd(KoronaModule):
     '''Korona module for... something?'''
     def __init__(self, **parameters):
         super().__init__('TemporaryComputationsEnd', **parameters)
+
+class EmptyPingRemoval(KoronaModule):
+    '''Korona module for removing empty pings, I guess.'''
+    def __init__(self, **parameters):
+        super().__init__('EmptyPingRemoval', **parameters)
+
+class Tracking(KoronaModule):
+    '''Korona module for tracking single targets'''
+    def __init__(self, **parameters):
+        super().__init__('Tracking', **parameters)
+
         
 global_spec = {
     # 'ModuleConfiguration' : None, # cds file name, attrib 'ref' points to...what?
@@ -211,5 +228,47 @@ modules_spec = {
     },
     'TemporaryComputationsEnd' : {
         'Active' : 'true'
+    },
+    'EmptyPingRemoval' : {
+        'Active' : 'true'
+    },
+    'Tracking' : {
+        'Active' : 'true',
+        'TrackerType' : 'SED',
+        'kHz' : '333',
+        'PlatformMotionType' : 'Floating',
+        'MinTS' : '-50',
+        'PulseLengthDeterminationLevel' : '5',
+        'MinEchoLength' : '0.005',
+        'MaxEchoLength' : '0.15',
+        'MaxGainCompensation' : '4',
+        'DoPhaseDeviationCheck' : 'true',
+        'MaxPhaseDevSteps' : '8',
+        'MaxTS' : '-20',
+        'MaxDepth' : '25.3',
+        'MaxAlongshipAngle' : '5',
+        'MaxAthwartshipAngle' : '5',
+        'InitiationGateFunction' : {
+            'Alpha' : '2.8',
+            'Beta' : '2.8',
+            'Range' : '0.1',
+            'TS' : '20'
+        },
+        'InitiationMinLength' : '1',
+        'GateFunction' : {
+            'Alpha' : '2.8',
+            'Beta' : '2.8',
+            'Range' : '0.1',
+            'TS' : '20'
+        },
+        'AlphaBetaEstimator' : {
+            'Alpha' : '0.5',
+            'Beta' : '0.5'
+        },
+        'MaxMissingPings' : '4',
+        'MaxMissingSamples' : '2',
+        'MaxMissingPingsFraction' : '0.7',
+        'MinTrackLength' : '12',
+        'MinSampleToLengthFraction' : '1'
     }
 }
