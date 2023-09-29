@@ -228,13 +228,15 @@ modules_spec = {
     'EmptyPingRemoval' : {
     },
     'NetcdfWriter' : {
-        'Active' : 'true',
-        'DirName' : 'pc',
+        'Active' :"true",
+        'DirName' : "netcdf",
         'MainFrequency' : '38',
-        'OutputType' :  'PULSE_COMPRESSION',
+        'WriterType' : 'CHANNEL_GROUP',
+        'GriddedOutputType' : 'PULSE_COMPRESSION',
         'WriteAngels' : 'true',
-        'FftWindowSize' : '10',
-        'DeltaFrequency' : '1'
+        'FftWindowSize' : '2',
+        'DeltaFrequency' : '1',
+        'ChannelGroupOutputType' : 'PULSE_COMPRESSION'
     },
     'Tracking' : {
         'TrackerType' : 'SED',

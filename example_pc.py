@@ -17,17 +17,21 @@ dirname = 'pc'
 ks = KoronaScript()
 
 # Add the pulsecompression module and write to nc
-ks.add(NetcdfWriter(Active="true", DirName=dirname,
+ks.add(NetcdfWriter(Active = "true",
+                    DirName = "pc",
                     MainFrequency = "38",
-                    OutputType = "PULSE_COMPRESSION",
+                    WriterType = "CHANNEL_GROUPS",
+                    GriddedOutputType = "PULSE_COMPRESSION",
                     WriteAngels = "true",
-                    FftWindowSize = "10",
-                    DeltaFrequency="1"))
+                    FftWindowSize = "2",
+                    DeltaFrequency = "1",
+                    ChannelGroupOutputType = "PULSE_COMPRESSION"))
 ks.write()
 ks.run(src=inputdir, dst=outputdir)
 
 # Read and plot processed nc files
-dat = xr.open_mfdataset(outputdir+dirname+'/*.nc', parallel=True)
-dat_sub = dat.sv['frequency' == 38000].transpose()
-quadmesh = plt.pcolormesh(10*np.log10(dat_sub))
+dat  = xr.open_mfdataset(outputdir+dirname+'/*.nc', parallel = "True")
+
+dat_sub  = dat.sv['frequency'  == 38000].transpose()
+quadmesh  = plt.pcolormesh(10*np.log10(dat_sub))
 plt.show()
