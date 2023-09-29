@@ -159,17 +159,25 @@ class TemporaryComputationsEnd(KoronaModule):
     def __init__(self, **parameters):
         super().__init__('TemporaryComputationsEnd', **parameters)
 
+
 class EmptyPingRemoval(KoronaModule):
     '''Korona module for removing empty pings, I guess.'''
     def __init__(self, **parameters):
         super().__init__('EmptyPingRemoval', **parameters)
+
 
 class Tracking(KoronaModule):
     '''Korona module for tracking single targets'''
     def __init__(self, **parameters):
         super().__init__('Tracking', **parameters)
 
-        
+
+class NetcdfWriter(KoronaModule):
+    '''Korona module for writing Nc files'''
+    def __init__(self, **parameters):
+        super().__init__('NetcdfWriter', **parameters)
+
+
 global_spec = {
     # 'ModuleConfiguration' : None, # cds file name, attrib 'ref' points to...what?
     #   <parameter name="ModuleConfiguration" ref="CfsDirectory">CW.cds</parameter>
@@ -195,16 +203,6 @@ modules_spec = {
         'Label' :  None,  # 'CW_0256ms'
         'Comment' : None
     },
-    'NetcdfWriter' : {
-        'DirName' : 'sv',
-        'MainFrequency' : '38',
-        'DeltaRange' : None,
-        'MaxRange' : None,
-        'OutputType' : 'SV_AND_ANGLES',
-        'WriteAngels' : 'true',
-        'FftWindowSize' : '10',
-        'DeltaFrequency' : '1',
-    },
     'Writer' : {
         'FileName' : None,
         'UseRelativeDirectory' : 'true',
@@ -228,6 +226,15 @@ modules_spec = {
     'TemporaryComputationsEnd' : {
     },
     'EmptyPingRemoval' : {
+    },
+    'NetcdfWriter' : {
+        'Active' : 'true',
+        'DirName' : 'pc',
+        'MainFrequency' : '38',
+        'OutputType' :  'PULSE_COMPRESSION',
+        'WriteAngels' : 'true',
+        'FftWindowSize' : '10',
+        'DeltaFrequency' : '1'
     },
     'Tracking' : {
         'TrackerType' : 'SED',
