@@ -18,7 +18,7 @@ the results as an netcdf. the NetCDF file is read and the pulse compressed data 
 
 # Input
 if len(sys.argv) != 3:
-    print('Usage: {__FILE__} inputdir outputdir')
+    print(f'Usage: {sys.argv[0]} inputdir outputdir')
     exit(0)
 else:
     inputdir = sys.argv[1]
