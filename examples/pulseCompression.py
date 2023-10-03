@@ -4,6 +4,14 @@ import xarray as xr
 import matplotlib.pyplot as plt
 import numpy as np
 
+"""
+
+This example reads the T2023001 test set, applied pulse compression and store 
+the results as an netcdf. the netcdf file is read and the pulse compressed data are plotted.
+
+"""
+
+
 # Set lsss env variable
 lsss = '/home/nilsolav/lsss/lsss-2.16.0-alpha/'
 os.environ["LSSS"] = lsss
@@ -18,7 +26,7 @@ ks = KoronaScript()
 
 # Add the pulsecompression module and write to nc
 ks.add(NetcdfWriter(Active = "true",
-                    DirName = "pc",
+                    DirName = dirname,
                     MainFrequency = "38",
                     WriterType = "CHANNEL_GROUPS",
                     GriddedOutputType = "PULSE_COMPRESSION",
@@ -32,6 +40,8 @@ ks.run(src=inputdir, dst=outputdir)
 # Read and plot processed nc files
 dat  = xr.open_mfdataset(outputdir+dirname+'/*.nc', parallel = "True")
 
+
+# There is no pc field in the data set?
 dat_sub  = dat.sv['frequency'  == 38000].transpose()
 quadmesh  = plt.pcolormesh(10*np.log10(dat_sub))
 plt.show()
