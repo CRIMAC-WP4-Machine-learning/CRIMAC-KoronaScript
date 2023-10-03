@@ -3,22 +3,27 @@ import os
 import xarray as xr
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
 """
 
-This example reads the T2023001 test set, applied pulse compression and store 
-the results as an netcdf. the netcdf file is read and the pulse compressed data are plotted.
+This example reads the specified test set (e.g. T2023001), applies pulse compression and stores 
+the results as an netcdf. the NetCDF file is read and the pulse compressed data are plotted.
 
 """
-
 
 # Set lsss env variable
-lsss = '/home/nilsolav/lsss/lsss-2.16.0-alpha/'
-os.environ["LSSS"] = lsss
+# lsss = '/home/nilsolav/lsss/lsss-2.16.0-alpha/'
+# os.environ["LSSS"] = lsss
 
 # Input
-inputdir = '/mnt/c/DATA/crimac/2023/T2023001/ACOUSTIC/EK80/EK80_RAWDATA/'
-outputdir = '/mnt/c/DATAscratch/crimac-scratch/2023/T2023001/ACOUSTIC/GRIDDED/'
+if len(sys.argv) != 3:
+    print('Usage: {__FILE__} inputdir outputdir')
+    exit(0)
+else:
+    inputdir = sys.argv[1]
+    outputdir = sys.argv[2]
+
 dirname = 'pc'
 
 # Instanitate the class
