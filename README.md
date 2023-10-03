@@ -26,11 +26,18 @@ os.environ["LSSS"] = lsss
 ~~~
 to your script.
 
-# Examples
+# Testing
+
+You can run the `test.sh` script to run each example on test data, and
+you can use `compare.sh` to compare the original raw files to the
+korona-generated ones (specify the two directories as command line
+parameters).
+
+# Example scripts
 
 ## Convert raw data to pulse compressed data and store as net cdf file
-See the ´examples/pusleCompression.py´ file.
+See the ´examples/pulseCompression.py´ file.
 
 ## Convert old work files to new ones
 
-
+## Channel removal
