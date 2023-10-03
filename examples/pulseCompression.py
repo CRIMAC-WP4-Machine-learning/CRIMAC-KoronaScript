@@ -43,7 +43,7 @@ ks.write()
 ks.run(src=inputdir, dst=outputdir)
 
 # Read and plot processed nc files
-dat  = xr.open_mfdataset(outputdir+dirname+'/*.nc', parallel = "True")
+dat  = xr.open_mfdataset(outputdir+'/'+dirname+'/*.nc', decode_times=False) # parallel = "True"
 
 
 # There is no pc field in the data set?
