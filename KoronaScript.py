@@ -1,4 +1,4 @@
-# Class to represent and run a sequence of Korona module applications
+# Class to represent and run a sequence of Korona moduleapplications
 # Example usage:
 #    ks = KoronaScript(global parameters)
 #    ks.add(KoronaModule(parametres)
@@ -10,6 +10,7 @@ import subprocess
 import tempfile
 import os
 import sys
+import json
 
 class KoronaScript():
     '''Construct, store, and run a set of Korona modules'''
@@ -192,6 +193,10 @@ global_spec = {
     'BroadbandSplitterBands' : None,
     'Towfish' : None,
 }
+
+# Dictionary of modules in Korona (replace with the one below)
+# f = open('./configuration/korona-info.json')
+# data = json.load(f)
 
 # Dictionary of modules with parameters and default values
 # Maybe list allowed values?  All modules have a parameter 'active',
