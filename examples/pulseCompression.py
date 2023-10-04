@@ -4,6 +4,8 @@ import xarray as xr
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
+from netCDF4 import Dataset
+import glob
 
 """
 
@@ -11,7 +13,6 @@ This example reads the specified test set (e.g. T2023001), applies pulse compres
 the results as an netcdf. the NetCDF file is read and the pulse compressed data are plotted.
 
 """
-
 # Set lsss env variable
 # lsss = '/home/nilsolav/lsss/lsss-2.16.0-alpha/'
 # os.environ["LSSS"] = lsss
@@ -42,11 +43,25 @@ ks.add(NetcdfWriter(Active = "true",
 ks.write()
 ks.run(src=inputdir, dst=outputdir)
 
-# Read and plot processed nc files
-dat  = xr.open_mfdataset(outputdir+'/'+dirname+'/*.nc', decode_times=False) # parallel = "True"
+# List NC files
+ncfiles = glob.glob(outputdir+'/'+dirname+'/*.nc')
 
+# Open dataset for file 0
+nc_dataset = Dataset(ncfiles[0], "r")
+grp = list(nc_dataset.groups.keys())
+data = [xr.open_dataset(ncfiles[0], group=_grp) for _grp in grp if not
+        _grp == 'Environment']
+data[0]
+# Average across channels and calculate the absolute value from the complex pc
+# values (Eq. 8 in
+# https://github.com/CRIMAC-WP4-Machine-learning/CRIMAC-Raw-To-Svf-TSf/blob/main/Paper/Manuscript.pdf)
 
-# There is no pc field in the data set?
-dat_sub  = dat.sv['frequency'  == 38000].transpose()
-quadmesh  = plt.pcolormesh(10*np.log10(dat_sub))
+f, ax = plt.subplots(1, len(data))
+for i in range(0, len(data)):
+    y_pc_n = np.sqrt(np.square(data[i].pulse_compressed_re.mean(dim='sector')) +
+                     np.square(data[i].pulse_compressed_re.mean(dim='sector'))).transpose()
+    # Plot the absolute values of the pc data
+    quadmesh  = ax[i].pcolormesh(10*np.log10(y_pc_n))
+    
 plt.show()
+

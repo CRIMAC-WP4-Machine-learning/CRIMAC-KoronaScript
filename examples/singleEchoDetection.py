@@ -25,3 +25,7 @@ dirname = 'pc'
 ks = KoronaScript()
 
 # Apply pc, sed and read the results.
+
+# Test how well the algorithm is working on our test sets
+
+# Check senstitivy to the parameters, are the results reliable?
