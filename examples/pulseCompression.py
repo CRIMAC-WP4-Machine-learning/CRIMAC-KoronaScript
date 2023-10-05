@@ -1,4 +1,5 @@
 from KoronaScript import *
+from KoronaScript.Modules import *
 import os
 import xarray as xr
 import matplotlib.pyplot as plt
