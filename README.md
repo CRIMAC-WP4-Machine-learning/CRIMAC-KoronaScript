@@ -33,6 +33,11 @@ os.environ["LSSS"] = lsss
 ~~~
 to your script.
 
+# Updating
+
+The modules are auto-generated from the JSON definitions found in
+configuration using the script [util/genmodules.py]().
+
 # Testing
 
 You can run the `test.sh` script to run each example on test data, and
