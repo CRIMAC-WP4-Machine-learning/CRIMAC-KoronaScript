@@ -8,6 +8,13 @@ This version of the KoronaScript is tested against lsss-2.16.0-alpha
 version. LSSS and korona is usually placed at
 `~/lsss/lsss-2.16.0-alpha` or a similar directory.
 
+Download the appropriate version from here:
+
+https://marec.no/tmp/lsss-2.16.0-alpha-20230922-1417-linux.zip
+
+https://marec.no/tmp/lsss-2.16.0-alpha-20230922-1417-windows.zip
+
+
 ### Add license 
 
 You need an LSSS licence. The licence have to be added according to the LSSS manual. the licence files are typically placed at the `~/marec/license` directory.
