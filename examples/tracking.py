@@ -1,4 +1,6 @@
 from KoronaScript import *
+import os
+import json
 
 # Tracking example
 
@@ -8,31 +10,45 @@ from KoronaScript import *
 # that belongs to each track and then calculate the TS(f)
 # Set lsss env variable
 
-lsss = '/home/nilsolav/lsss/lsss-2.16.0-alpha/'
-os.environ["LSSS"] = lsss
-inputdir = '/mnt/c/DATA/crimac/2023/T2023001/ACOUSTIC/EK80/EK80_RAWDATA/'
-outputdir = '/mnt/c/DATAscratch/korona/'
+# Create a local file named tracking.json containing
 '''
-# Input
-if len(sys.argv) != 3:
-    print(f'Usage: {sys.argv[0]} inputdir outputdir')
+{
+    "lsss" : "/home/nilsolav/lsss/lsss-2.16.0-alpha/",
+    "inputdir" : "/mnt/c/DATA/crimac/2023/T2023001/ACOUSTIC/EK80/EK80_RAWDATA/",
+    "outputdir" : "/mnt/c/DATAscratch/korona/",
+    "trranges" : "/home/nilsolav/repos/CRIMAC-KoronaScript/examples/TransducerRanges.xml"
+}
+'''
+# Or call the scripts with parameters "inputdir" "outputdir" "lsss" "trranges"
+
+# Get input parameters
+if os.path.exists('./examples/tracking.json'):
+    with open('./examples/tracking.json','r') as f:
+        par = json.load(f)
+elif len(sys.argv) != 5:
+    print(f'Usage: {sys.argv[0]} inputdir outputdir lsss trranges')
     exit(0)
 else:
-    inputdir = sys.argv[1]
-    outputdir = sys.argv[2]
+    par = {"inputdir": sys.argv[1],
+           "outputdir": sys.argv[2],
+           "lsss": sys.argv[3],
+           "trranges": sys.argv[4]}
+
+os.environ["LSSS"] = par['lsss']
+
+# Set the path to the transducer ranges
+ks = KoronaScript(TransducerRanges = par['trranges'])
+
 '''
-
-
-# Instanitate the class
-ks = KoronaScript()
-
 ks.add(Comment(Active = "true",
                LineBreak = "false",
                Label = "Tracking setup",
                Comment = ""))
+'''
 
 ks.add(EmptyPingRemoval(Active = "true"))
 
+'''
 ks.add(DataReduction(Active = "true",
                      BlindZone = "false",
                      MinRange = "14",
@@ -40,6 +56,7 @@ ks.add(DataReduction(Active = "true",
                      TransducerRange = "false",
                      MaxRange = "26",
                      MaxDepth = ""))
+'''
 
 ks.add(Tracking(Active = "true",
                 TrackerType = "SED",
@@ -78,6 +95,9 @@ ks.add(Tracking(Active = "true",
 
 # run korona
 ks.write()
-ks.run(src=inputdir, dst=outputdir) # Begrening på kjernar
+ks.run(src=par['inputdir'], dst=par['outputdir']) # Begrening på kjernar
+
+# Read data
+
 
 # Plot results

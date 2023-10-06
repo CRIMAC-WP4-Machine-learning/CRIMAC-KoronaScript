@@ -13,17 +13,21 @@ This example reads the specified test set (e.g. T2023001), applies pulse compres
 the results as an netcdf. the NetCDF file is read and the pulse compressed data are plotted.
 
 """
-# Set lsss env variable
-# lsss = '/home/nilsolav/lsss/lsss-2.16.0-alpha/'
-# os.environ["LSSS"] = lsss
 
-# Input
-if len(sys.argv) != 3:
-    print(f'Usage: {sys.argv[0]} inputdir outputdir')
+# Get input parameters
+if os.path.exists('./examples/pulseCompression.json'):
+    with open('./examples/pulseCompression.json', 'r') as f:
+        par = json.load(f)
+elif len(sys.argv) != 4:
+    print(f'Usage: {sys.argv[0]} inputdir outputdir lsss ')
     exit(0)
 else:
-    inputdir = sys.argv[1]
-    outputdir = sys.argv[2]
+    par = {"inputdir": sys.argv[1],
+           "outputdir": sys.argv[2],
+           "lsss": sys.argv[3]}
+
+# Set lsss env variable
+os.environ["LSSS"] = par['lsss']
 
 dirname = 'pc'
 
@@ -41,10 +45,10 @@ ks.add(NetcdfWriter(Active = "true",
                     DeltaFrequency = "1",
                     ChannelGroupOutputType = "PULSE_COMPRESSION"))
 ks.write()
-ks.run(src=inputdir, dst=outputdir)
+ks.run(src=par["inputdir"], dst=par["outputdir"]) # Begrening på kjernar
 
 # List NC files
-ncfiles = glob.glob(outputdir+'/'+dirname+'/*.nc')
+ncfiles = glob.glob(par["outputdir"]+'/'+dirname+'/*.nc')
 
 # Open dataset for file 0
 nc_dataset = Dataset(ncfiles[0], "r")
@@ -59,7 +63,7 @@ data[0]
 f, ax = plt.subplots(1, len(data))
 for i in range(0, len(data)):
     y_pc_n = np.sqrt(np.square(data[i].pulse_compressed_re.mean(dim='sector')) +
-                     np.square(data[i].pulse_compressed_re.mean(dim='sector'))).transpose()
+                     np.square(data[i].pulse_compressed_im.mean(dim='sector'))).transpose()
     # Plot the absolute values of the pc data
     quadmesh  = ax[i].pcolormesh(10*np.log10(y_pc_n))
     
