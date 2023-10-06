@@ -25,8 +25,6 @@ class KoronaModule():
             print(f'Unknown Korona module "{name}" - aborting')
             exit(-1)
         self._name = name
-        # All modules have this
-        self._config = {'Active' : 'true'}
         # Add defaults
         for k,v in modules_spec[name].items():
             self._config[k] = v

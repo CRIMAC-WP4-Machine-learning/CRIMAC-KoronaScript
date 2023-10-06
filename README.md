@@ -33,17 +33,22 @@ os.environ["LSSS"] = lsss
 ~~~
 to your script.
 
+# Updating
+
+The modules are auto-generated from the JSON definitions found in
+configuration using the script [util/genmodule.py](util/genmodule.py).
+
 # Testing
 
-You can run the `test.sh` script to run each example on test data, and
-you can use `compare.sh` to compare the original raw files to the
+You can run the [test.sh](test.sh) script to run each example on test data, and
+you can use [compare.sh](compare.sh) to compare the original raw files to the
 korona-generated ones (specify the two directories as command line
 parameters).
 
 # Example scripts
 
 ## Convert raw data to pulse compressed data and store as net cdf file
-See the ´examples/pulseCompression.py´ file.
+See the [examples/pulseCompression.py](examples/pulseCompression.py) file.
 
 ## Convert old work files to new ones
 
