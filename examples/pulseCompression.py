@@ -46,8 +46,8 @@ ksi.add(ksm.NetcdfWriter(Active = "true",
                          FftWindowSize = "2",
                          DeltaFrequency = "1",
                          ChannelGroupOutputType = "PULSE_COMPRESSION"))
-ks.write()
-ks.run(src=par["inputdir"], dst=par["outputdir"]) # Begrening på kjernar
+ksi.write()
+ksi.run(src=par["inputdir"], dst=par["outputdir"]) # Begrening på kjernar
 
 # List NC files
 ncfiles = glob.glob(par["outputdir"]+'/'+dirname+'/*.nc')
