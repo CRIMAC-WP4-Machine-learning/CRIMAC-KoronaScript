@@ -26,12 +26,12 @@ variable in the shell
 ~~~
 export LSSS=~/lsss-2.16.0-alpha/korona
 ~~~
-before running your script, or by adding
+before running your script, or by adding to path 
 ~~~
 lsss = '~/lsss-2.16.0-alpha/korona'
 os.environ["LSSS"] = lsss
 ~~~
-to your script.
+pointing at the LSSS environment to your script.
 
 # Updating
 
@@ -53,3 +53,10 @@ See the [examples/pulseCompression.py](examples/pulseCompression.py) file.
 ## Convert old work files to new ones
 
 ## Channel removal
+See the [examples/channelRemoval.py](examples/channelRemoval.py) file.
+
+## Single echo detection
+See the [examples/singleEchoDetection.py](examples/singleEchoDetection.py) file.
+
+## Tracking
+See the [examples/tracking.py](examples/tracking.py) file.
