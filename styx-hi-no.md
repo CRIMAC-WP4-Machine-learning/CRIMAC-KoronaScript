@@ -84,7 +84,7 @@ Use ´pip list´ to see which ones are installed in you venv.
 
 Python also need to find the packages. Use the PYTHONPATH to do this (use colon to separate the paths):
 
-export PYTHONPATH=~/repos/CRIMAC-KoronaScript:$PYTHONPATH
+`export PYTHONPATH=~/repos/CRIMAC-KoronaScript:$PYTHONPATH`
 
 # Testing
 
