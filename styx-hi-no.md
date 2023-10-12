@@ -88,7 +88,16 @@ export PYTHONPATH=~/repos/CRIMAC-KoronaScript:$PYTHONPATH
 
 # Testing
 
-Run a test script to see if everything is working:
+Run a test script to see if everything is working. 
+
+Create a temp directory to store results (can be set to anything you like):
+`cd ~`
+
+`mkdir tmp`
 
 `cd ~/repos/CRIMAC-KoronaScript`
+
+Make sure that the venv is activated and run 
+
+`python ./examples/testFMtoPC_hi.py`
 
