@@ -1,5 +1,5 @@
-from KoronaScript import *
-from KoronaScript.Modules import *
+import KoronaScript.Modules as ksm
+import KoronaScript as ks
 import os
 import xarray as xr
 import matplotlib.pyplot as plt
@@ -7,6 +7,7 @@ import numpy as np
 import sys
 from netCDF4 import Dataset
 import glob
+import json
 
 """
 
@@ -33,20 +34,20 @@ os.environ["LSSS"] = par['lsss']
 dirname = 'pc'
 
 # Instanitate the class
-ks = KoronaScript()
+ksi = ks.KoronaScript()
 
 # Add the pulsecompression module and write to nc
-ks.add(NetcdfWriter(Active = "true",
-                    DirName = dirname,
-                    MainFrequency = "38",
-                    WriterType = "CHANNEL_GROUPS",
-                    GriddedOutputType = "PULSE_COMPRESSION",
-                    WriteAngels = "true",
-                    FftWindowSize = "2",
-                    DeltaFrequency = "1",
-                    ChannelGroupOutputType = "PULSE_COMPRESSION"))
-ks.write()
-ks.run(src=par["inputdir"], dst=par["outputdir"]) # Begrening på kjernar
+ksi.add(ksm.NetcdfWriter(Active = "true",
+                         DirName = dirname,
+                         MainFrequency = "38",
+                         WriterType = "CHANNEL_GROUPS",
+                         GriddedOutputType = "PULSE_COMPRESSION",
+                         WriteAngels = "true",
+                         FftWindowSize = "2",
+                         DeltaFrequency = "1",
+                         ChannelGroupOutputType = "PULSE_COMPRESSION"))
+ksi.write()
+ksi.run(src=par["inputdir"], dst=par["outputdir"]) # Begrening på kjernar
 
 # List NC files
 ncfiles = glob.glob(par["outputdir"]+'/'+dirname+'/*.nc')
@@ -63,8 +64,10 @@ data[0]
 
 f, ax = plt.subplots(1, len(data))
 for i in range(0, len(data)):
-    y_pc_n = np.sqrt(np.square(data[i].pulse_compressed_re.mean(dim='sector')) +
-                     np.square(data[i].pulse_compressed_im.mean(dim='sector'))).transpose()
+    y_pc_n = np.sqrt(np.square(data[i].pulse_compressed_re.mean(
+        dim='sector')) +
+                     np.square(data[i].pulse_compressed_im.mean(
+                         dim='sector'))).transpose()
     # Plot the absolute values of the pc data
     quadmesh  = ax[i].pcolormesh(10*np.log10(y_pc_n))
     

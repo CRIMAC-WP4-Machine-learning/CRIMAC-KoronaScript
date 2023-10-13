@@ -73,6 +73,6 @@ class KoronaScript():
         res = subprocess.run([java] + javaopts + ['batch', '--cfs', cfsname, '--source', src, '--destination', dst])
         print(res.stdout)
         if res.returncode != 0:
-            print('Warning: Java subprocess returned error code {res.returncode}')
+            print(f'Warning: Java subprocess returned error code {res.returncode}')
             print('Errors:')
             print(res.stderr)
