@@ -1455,8 +1455,6 @@ class SimradConfigParser(_SimradDatagramParser):
 
         return struct.pack(datagram_fmt, *datagram_contents)
 
-
-
 class SimradRawParser(_SimradDatagramParser):
     '''
     Sample Data Datagram parser operates on dictonaries with the following keys:
@@ -1695,3 +1693,137 @@ class SimradRawParser(_SimradDatagramParser):
                     datagram_contents.extend(data['complex'].view(np.ubyte))
 
         return struct.pack(datagram_fmt, *datagram_contents)
+
+class SimradTrackInfoParser(_SimradDatagramParser):
+    '''
+    Class for detecting and parsing TrackInfo datagrams from Korona tracking modules.
+    Not a part of the pyecholab package.
+
+    The track info datagram contains the following keys
+
+        type:           string == 'TNF0'
+        low_date:       long uint representing LSBytes of 64bit NT date
+        high_date:      long uint representing MSBytes of 64bit NT date
+        id:             long uint representing the ID of this track
+        channel:        ushort representing the channel this track was detected on
+        valid:          byte == 1 if track is valid, 0 otherwise
+        pingSinceFirst: long uint representing the number of pings since the start of this track, relative to this ping
+        pingSinceLast:  long uint representing the number of pings since the end of this track, relative to this ping
+    '''
+    def __init__(self):
+        headers = {0: [('type', '4s'),  # TNF0
+                       ('nttime_low', 'L'),  # NT time (low, high)
+                       ('nttime_high', 'L'),  # NT time (low, high)
+                       ('id', 'L'),  # ID of this track
+                       ('channel', 'H'),  # The channel this track was detected on
+                       ('valid', 'B'),  # 1 if this track is marked as valid, otherwise 0
+                       ('pingsSinceFirst', 'L'),  # Number of pings since the start of this track, relative to this ping
+                       ('pingsSinceLast', 'L'),]  # Number of pings since the end of this track, relative to this ping
+                   }
+
+        _SimradDatagramParser.__init__(self, "TNF", headers)
+
+    def _unpack_contents(self, raw_string, length, version=0):
+        assert self.header_size(0) == length, "Datagram length does not match format"
+
+        header_values = struct.unpack(self.header_fmt(version), raw_string[:self.header_size(version)])
+        data = {}
+
+        for indx, field in enumerate(self.header_fields(version)):
+            data[field] = header_values[indx]
+
+        data['type'] = data['type'].decode('latin-1')
+        data['timestamp'] = nt_to_unix((data['nttime_low'], data['nttime_high']))
+        data['timestamp'] = data['timestamp'].replace(tzinfo=None)
+        return data
+
+
+class SimradTrackBorderParser(_SimradDatagramParser):
+    '''
+    Class for detecting and parsing TrackBorder datagrams from Korona tracking modules.
+    Not a part of the pyecholab package.
+
+    The track border datagram contains the following keys
+
+        type:           string == 'TBR0'
+        low_date:       long uint representing LSBytes of 64bit NT date
+        high_date:      long uint representing MSBytes of 64bit NT date
+        id:             long uint representing the ID of this track
+        channel:        ushort representing the channel this track was detected on
+        minDepth:       float representing the minimum depth of this track
+        maxDepth:       float representing the maximum depth of this track
+        peakDepth:      float representing the peak depth of this track
+    '''
+    def __init__(self):
+        headers = {0: [('type', '4s'),  # TBR0
+                       ('nttime_low', 'L'),  # NT time (low, high)
+                       ('nttime_high', 'L'),  # NT time (low, high)
+                       ('id', 'L'),  # ID of this track
+                       ('channel', 'H'),  # The channel this track was detected on
+                       ('minDepth', 'f'),  # [m]
+                       ('maxDepth', 'f'),  # [m]
+                       ('peakDepth', 'f')]  # [m]
+                   }
+
+        _SimradDatagramParser.__init__(self, "TBR", headers)
+
+    def _unpack_contents(self, raw_string, length, version=0):
+        assert self.header_size(0) == length, "Datagram length does not match format"
+
+        header_values = struct.unpack(self.header_fmt(version), raw_string[:self.header_size(version)])
+        data = {}
+
+        for indx, field in enumerate(self.header_fields(version)):
+            data[field] = header_values[indx]
+
+        data['type'] = data['type'].decode('latin-1')
+        data['timestamp'] = nt_to_unix((data['nttime_low'], data['nttime_high']))
+        data['timestamp'] = data['timestamp'].replace(tzinfo=None)
+        return data
+
+
+class SimradTrackContentsParser(_SimradDatagramParser):
+    '''
+    Class for detecting and parsing Track Table of Contents datagram datagrams from Korona tracking modules.
+    Not a part of the pyecholab package.
+
+    The track contents datagram contains the following keys
+
+        type:           string == 'TTC0'
+        low_date:       long uint representing LSBytes of 64bit NT date
+        high_date:      long uint representing MSBytes of 64bit NT date
+        validCount:     long uint representing the number of valid tracks
+        validIds:       array of long uints representing the ids of the valid tracks
+        timesCount:     long uint representing the number of pings containing one or more Track info datagram
+        pingTimes:      array of long uints representing the time of pings containing one or more Track info datagram
+    '''
+    def __init__(self):
+        headers = {0: [('type', '4s'),  # TTC0
+                       ('nttime_low', 'L'),  # NT time (low, high)
+                       ('nttime_high', 'L'),  # NT time (low, high)
+                       ('validCount', 'L')]  # The number of valid tracks
+                   }
+
+        _SimradDatagramParser.__init__(self, "TCO", headers)
+
+    def _unpack_contents(self, raw_string, length, version=0):
+        # assert self.header_size(0) == length, "Datagram length does not match format"
+
+        header_values = struct.unpack(self.header_fmt(version), raw_string[:self.header_size(version)])
+        data = {}
+
+        for indx, field in enumerate(self.header_fields(version)):
+            data[field] = header_values[indx]
+
+        data['type'] = data['type'].decode('latin-1')
+        data['timestamp'] = nt_to_unix((data['nttime_low'], data['nttime_high']))
+        data['timestamp'] = data['timestamp'].replace(tzinfo=None)
+
+        if data['validCount'] == 0:
+            data['validIds'] = []
+            data['timesCount'] = 0
+            data['pingTimes'] = []
+        else:
+            raise NotImplementedError('Parsing of TCO datagrams with valid tracks is not implemented yet')
+
+        return data
