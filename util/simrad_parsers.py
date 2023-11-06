@@ -1824,6 +1824,39 @@ class SimradTrackContentsParser(_SimradDatagramParser):
             data['timesCount'] = 0
             data['pingTimes'] = []
         else:
-            raise NotImplementedError('Parsing of TCO datagrams with valid tracks is not implemented yet')
+            # Get format string for the list of valid track ids
+            _fmt_valid = '<' + 'L'*data['validCount'] #+ 'L' #+ 'L'*data['validCount']*2
+
+            # Unpack the list of valid track ids
+            pos = self.header_size(0)
+            _values = struct.unpack(_fmt_valid,
+                                    raw_string[pos:pos + struct.calcsize(_fmt_valid)])
+            pos += struct.calcsize(_fmt_valid)
+            data['validIds'] = list(_values)
+
+            # Unpack the number of pings with one or more valid track
+            _fmt_times_count = "<L"
+            _values = struct.unpack(_fmt_times_count,
+                                    raw_string[pos:pos + struct.calcsize(_fmt_times_count)])
+            data['timesCount'] = _values[0]
+            pos += struct.calcsize(_fmt_times_count)
+
+            # Get format string for the list of ping times
+            _fmt_ping_times = '<' + 'L'*data['timesCount']*2
+
+            # Check that the total format string length matches the datagram length
+            final_pos = pos + struct.calcsize(_fmt_ping_times)
+            assert final_pos == length, "Datagram length does not match format"
+
+            # Unpack the list of ping times
+            _values = struct.unpack(_fmt_ping_times, raw_string[pos:length])
+
+            # Convert list of NT times to list of unix times
+            data['pingTimes'] = []
+            idx = 0
+            for _ in range(data['timesCount']):
+                ping_time = nt_to_unix((_values[idx], _values[idx+1]))
+                data['pingTimes'].append(ping_time.replace(tzinfo=None))
+                idx += 2
 
         return data

@@ -1,5 +1,5 @@
 from KoronaScript import *
-from KoronaScript.Modules import *
+import KoronaScript.Modules as ksm
 import os
 import json
 
@@ -70,8 +70,9 @@ if __name__ == "__main__":
                    Label = "Tracking setup",
                    Comment = ""))
     '''
-
-    ks.add(EmptyPingRemoval(Active = "true"))
+    # For T2023002
+    # ks.add(ksm.ChannelRemoval(Channels=[2, 6, 10, 14, 18], KeepSpecified='true'))
+    ks.add(ksm.EmptyPingRemoval(Active = "true"))
 
     '''
     ks.add(DataReduction(Active = "true",
@@ -83,7 +84,7 @@ if __name__ == "__main__":
                          MaxDepth = ""))
     '''
 
-    ks.add(Tracking(Active = "true",
+    ks.add(ksm.Tracking(Active = "true",
                     TrackerType = "SED",
                     kHz = "38",
                     PlatformMotionType = "Floating",
