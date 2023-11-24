@@ -36,30 +36,32 @@ os.environ["LSSS"] = lsss
 ~~~
 pointing at the LSSS environment to your script.
 
-# Updating
+# Usage
 
-The modules are auto-generated from the JSON definitions found in
-configuration using the script [util/genmodule.py](util/genmodule.py).
+Import the modules:
 
-# Testing
+	import KoronaScript as ks
+	import KoronaScript.Modules as ksm
 
-You can run the [test.sh](test.sh) script to run each example on test data, and
-you can use [compare.sh](compare.sh) to compare the original raw files to the
-korona-generated ones (specify the two directories as command line
-parameters).
+Create a script object:
 
-# Example scripts
+	ks = ks.KoronaScript(Categorization='categorization.xml',
+                     HorizontalTransducerOffsets='HorizontalTransducerOffsets.xml')
 
-## Convert raw data to pulse compressed data and store as net cdf file
-See the [examples/pulseCompression.py](examples/pulseCompression.py) file.
+Add some modules:
 
-## Convert old work files to new ones
+	ks.add(ksm.EmptyPingRemoval())
+	ks.add(ksm.Comment(LineBreak='false', Label='CW_0256ms'))
+	ks.add(ksm.ChannelRemoval(Channels=[1,5,9,13,17],KeepSpecified='true'))
+	ks.add(ksm.Writer(RelativeDirectory='CW_0256ms'))
 
-## Channel removal
-See the [examples/channelRemoval.py](examples/channelRemoval.py) file.
+Write out the resulting configuration:
 
-## Single echo detection
-See the [examples/singleEchoDetection.py](examples/singleEchoDetection.py) file.
+	ks.write()
+	
+Run the script:
 
-## Tracking
-See the [examples/tracking.py](examples/tracking.py) file.
+	ks.run(src="input_dir", dst="output_dir")
+
+The list of modules and their parameters can be found in the
+[configuration/korona-info.json](configuration/korona-info.json) file. 
