@@ -36,16 +36,18 @@ def index(f):
     idx = []
     with open(f, "rb") as fh:
         with mmap.mmap(fh.fileno(), length=0, access=mmap.ACCESS_READ) as mf:
-            pos = 0
-            while pos < len(mf):
-                l, m = struct.unpack('<l4s', mf[pos:pos+8])
-                if pos+l > len(mf):
+            position = 0
+            while position < len(mf):
+                length, msg = struct.unpack('<l4s', mf[position:position+8])
+                if position+length > len(mf):
                     raise Exception('Premature EOF, truncated RAW file?')
-                v = struct.unpack('<l', mf[pos+l+4:pos+l+8])
-                t = m.decode('latin-1')
-                if v[0]!=l: warn(f'Datagram at {pos}: control lenght mismatch ({l} vs {v[0]}) - endianness error or corrupt file?')
-                idx.append((pos,t,l,mf[pos+4:pos+4+l]))
-                pos += l+8
+                v = struct.unpack('<l', mf[position+length+4:position+length+8])
+                t = msg.decode('latin-1')
+                if v[0] != length: warn(
+                    f'Datagram at {position}: control lenght mismatch ({length} vs {v[0]}) - endianness error or corrupt file?')
+                idx.append((position, t, length, mf[position + 4:position + 4 + length]))
+                position += length + 8
+
     return idx
 
 if __name__ == '__main__':
@@ -53,4 +55,4 @@ if __name__ == '__main__':
     for pos,typ,length,msg in index(sys.argv[1]):
         print(f'{typ}\t{length}')
 
-    
+
