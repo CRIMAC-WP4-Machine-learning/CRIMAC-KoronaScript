@@ -66,10 +66,11 @@ class KoronaScript():
             exit(-1)
         os.environ['TOP_INSTALLATION_DIR'] = lsss
 
-        java = lsss+'/jre/bin/java'
+        java = os.path.join(*[lsss, 'jre', 'bin', 'java'])
 
-        # "-Xmx${MAX_MEMORY_MB}m" -classpath "$TOP_INSTALLATION_DIR/lib/jar/*" "-Djava.library.path=$JAVA_LIBRARY_PATH" "-Djna.library.path=$JAVA_LIBRARY_PATH" -XX:-UseGCOverheadLimit -XX:-OmitStackTraceInFastThrow -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain "$@"
-        javaopts = ['-classpath', f'{lsss}/lib/jar/*', '-Dno.marec.incubator=true', 'no.imr.korona.main.KoronaCliMain']
+
+        # "-Xmx${MAX_MEMORY_MB}m" -classpath "t$TOP_INSTALLATION_DIR/lib/jar/*" "-Djava.library.path=$JAVA_LIBRARY_PATH" "-Djna.library.path=$JAVA_LIBRARY_PATH" -XX:-UseGCOverheadLimit -XX:-OmitStackTraceInFastThrow -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain "$@"
+        javaopts = ['-classpath', os.path.join(*[lsss, "lib", "jar", "*"]), '-Dno.marec.incubator=true', 'no.imr.korona.main.KoronaCliMain']
         res = subprocess.run([java] + javaopts + ['batch', '--cfs', cfsname, '--source', src, '--destination', dst])
         print(res.stdout)
         if res.returncode != 0:

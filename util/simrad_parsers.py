@@ -1714,7 +1714,7 @@ class SimradTrackInfoParser(_SimradDatagramParser):
         headers = {0: [('type', '4s'),  # TNF0
                        ('nttime_low', 'L'),  # NT time (low, high)
                        ('nttime_high', 'L'),  # NT time (low, high)
-                       ('id', 'L'),  # ID of this track
+                       ('id', 'l'),  # ID of this track, seems to be signed int (has negative values in work-file)
                        ('channel', 'H'),  # The channel this track was detected on
                        ('valid', 'B'),  # 1 if this track is marked as valid, otherwise 0
                        ('pingsSinceFirst', 'L'),  # Number of pings since the start of this track, relative to this ping
@@ -1758,7 +1758,7 @@ class SimradTrackBorderParser(_SimradDatagramParser):
         headers = {0: [('type', '4s'),  # TBR0
                        ('nttime_low', 'L'),  # NT time (low, high)
                        ('nttime_high', 'L'),  # NT time (low, high)
-                       ('id', 'L'),  # ID of this track
+                       ('id', 'l'),  # ID of this track
                        ('channel', 'H'),  # The channel this track was detected on
                        ('minDepth', 'f'),  # [m]
                        ('maxDepth', 'f'),  # [m]
