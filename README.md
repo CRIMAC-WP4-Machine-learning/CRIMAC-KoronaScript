@@ -24,17 +24,17 @@ You need an LSSS licence. The licence have to be added according to the LSSS man
 
 ### Set system variables
 
-This can be set at run time either by setting the LSSS environment
+The `LSSS` environment variable should point to the root directory of your
+LSSS installation.  It can be set at run time either by setting the LSSS environment
 variable in the shell
 ~~~
-export LSSS=~/lsss-2.16.0-alpha/korona
+export LSSS=~/lsss-2.16.0-alpha
 ~~~
-before running your script, or by adding to path 
+before running your script, or by adding it manually from inside Python:
 ~~~
-lsss = '~/lsss-2.16.0-alpha/korona'
+lsss = '~/lsss-2.16.0-alpha'
 os.environ["LSSS"] = lsss
 ~~~
-pointing at the LSSS environment to your script.
 
 # Usage
 

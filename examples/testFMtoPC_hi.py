@@ -1,25 +1,9 @@
 import KoronaScript.Modules as ksm
 import KoronaScript as ks
 import os
-'''
-import xarray as xr
-import matplotlib.pyplot as plt
-import numpy as np
 import sys
-from netCDF4 import Dataset
-import glob
-import json
-import pandas as pd
-'''
 
-# This is the messor data example
-inputdir = '/data/crimac/2021/T2021002/ACOUSTIC/EK80/EK80_RAWDATA/'
-
-# Write to temp directory
-outputdir = '.' # '/home/nilsolav/tmp/'
-
-# Filter the FM test data:
-ksi = ks.KoronaScript(TransducerRanges = "/home/nilsolav/repos/CRIMAC-KoronaScript/examples/TransducerRanges.xml")
+ksi = ks.KoronaScript(TransducerRanges = "examples/TransducerRanges.xml")
 
 # Add the pulsecompression module and write to nc
 
@@ -35,4 +19,4 @@ ksi.add(ksm.TsDetection(Active = "true",
                         MaxDepth = "40"))
 
 ksi.write()
-ksi.run(src = inputdir, dst = outputdir)
+ksi.run(src = sys.argv[1], dst = sys.argv[2])

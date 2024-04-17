@@ -18,6 +18,6 @@ for raw in $orig_dir/*.raw; do
     cut -f1 /tmp/tmp1 | sort | uniq -c
     echo Processed:
     cut -f1 /tmp/tmp2 | sort | uniq -c
-    Diffs:
-    diff /tmp/tmp1 /tmp/tmp2
+    echo Diffs:
+    diff /tmp/tmp1 /tmp/tmp2 | head -30
 done
