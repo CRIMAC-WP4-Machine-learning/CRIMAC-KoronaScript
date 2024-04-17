@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Run a set of tests
+# Run a set of tests using internal IMR data sets
 
 export PYTHONPATH=.
 export LSSS=lsss-2.15.0-alpha
