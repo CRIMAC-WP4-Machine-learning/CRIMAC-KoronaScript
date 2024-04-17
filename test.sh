@@ -10,6 +10,11 @@ export TESTSET=/data/crimac/2023/T2023001/ACOUSTIC/EK80/EK80_RAWDATA/
 # This is the messor data example (for FM2PC?):
 #    /data/crimac/2021/T2021002/ACOUSTIC/EK80/EK80_RAWDATA/
 
+if ! test -e "$TESTSET"; then
+   echo "Testset not found: $TESTSET"
+   exit -1
+fi
+
 mkdir -p test_cr.out
 python3 examples/channelRemoval.py $TESTSET test_cr.out
 
