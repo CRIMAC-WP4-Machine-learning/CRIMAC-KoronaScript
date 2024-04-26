@@ -2,8 +2,7 @@ import sys
 import KoronaScript as ks
 import KoronaScript.Modules as ksm
 
-ks = ks.KoronaScript(Categorization='categorization.xml',
-                     HorizontalTransducerOffsets='HorizontalTransducerOffsets.xml')
+ks = ks.KoronaScript(TransducerRanges='examples/TransducerRanges.xml')
 
 ks.add(ksm.Tracking())
 ks.add(ksm.EmptyPingRemoval())

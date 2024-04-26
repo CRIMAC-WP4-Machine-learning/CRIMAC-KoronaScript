@@ -70,11 +70,13 @@ class KoronaScript():
 
 
         # "-Xmx${MAX_MEMORY_MB}m" -classpath "t$TOP_INSTALLATION_DIR/lib/jar/*" "-Djava.library.path=$JAVA_LIBRARY_PATH" "-Djna.library.path=$JAVA_LIBRARY_PATH" -XX:-UseGCOverheadLimit -XX:-OmitStackTraceInFastThrow -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain "$@"
-        javaopts = ['-classpath', os.path.join(*[lsss, "lib", "jar", "*"]), '-Dno.marec.incubator=true', 'no.imr.korona.main.KoronaCliMain']
-        winpath = os.path.join(*[lsss,'lib','native','win64'])
-        if os.path.exists(winpath):
-            javaopts.append(f'-Djava.library.path={winpath}', f'-Djna.library.path={winpath}')
-        res = subprocess.run([java] + javaopts + ['batch', '--cfs', cfsname, '--source', src, '--destination', dst])
+        javaopts = ['-classpath', os.path.join(*[lsss, "lib", "jar", "*"]), '-Dno.marec.incubator=true']
+        libpath = os.path.join(*[lsss, 'lib', 'native', 'win64'])
+        if os.path.exists(libpath):
+            for v in ['java.library.path', 'jna.library.path']:
+                javaopts.append(f'-D{v}={libpath}')
+
+        res = subprocess.run([java] + javaopts + ['no.imr.korona.main.KoronaCliMain', 'batch', '--cfs', cfsname, '--source', src, '--destination', dst])
         print(res.stdout)
         if res.returncode != 0:
             print(f'Warning: Java subprocess returned error code {res.returncode}')
