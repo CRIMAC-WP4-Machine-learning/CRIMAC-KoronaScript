@@ -14,6 +14,10 @@ import json
 
 from .KoronaModule import KoronaModule, global_spec
 
+lsss = os.getenv('LSSS')
+if lsss is None:
+    print('KoronaScript: Warning: $LSSS is not set.')
+
 class KoronaScript():
     '''Construct, store, and run a set of Korona modules'''
 
@@ -60,14 +64,12 @@ class KoronaScript():
                 self.write(cfs=cfsfd, cds=cdsfd, cdsname=cdsname)
 
         # if os.getenv('JAVA_HOME'): (...)
-        lsss = os.getenv('LSSS')
         if lsss is None:
-            print('LSSS environment variable not specified')
+            print('KoronaScript: Error: LSSS environment variable not specified')
             exit(-1)
         os.environ['TOP_INSTALLATION_DIR'] = lsss
 
         java = os.path.join(*[lsss, 'jre', 'bin', 'java'])
-
 
         # "-Xmx${MAX_MEMORY_MB}m" -classpath "t$TOP_INSTALLATION_DIR/lib/jar/*" "-Djava.library.path=$JAVA_LIBRARY_PATH" "-Djna.library.path=$JAVA_LIBRARY_PATH" -XX:-UseGCOverheadLimit -XX:-OmitStackTraceInFastThrow -Dno.marec.incubator=true no.imr.korona.main.KoronaCliMain "$@"
         javaopts = ['-classpath', os.path.join(*[lsss, "lib", "jar", "*"]), '-Dno.marec.incubator=true']
