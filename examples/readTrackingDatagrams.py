@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 
 from util.rawindex import index
 from util.simrad_parsers import SimradConfigParser, SimradTrackInfoParser, SimradTrackBorderParser, SimradTrackContentsParser, SimradXMLParser
-from util.date_conversion import dt64_to_nt, datetime_to_unix, UTC_NT_EPOCH
+from util.date_conversion import dt64_to_nt, UTC_NT_EPOCH
 
 # Read track datagrams example
 
@@ -79,15 +79,15 @@ def clean_work_dict(work_dict):
         if key == 'ntDate':
             work_dict[key] = nt_to_datetime(convert_str(val)).strftime('%Y-%m-%d %H:%M:%S.%f')
         else:
-            if type(val) == dict:
+            if type(val) is dict:
                 clean_work_dict(val)
-            elif type(val) == list:
+            elif type(val) is list:
                 for i, item in enumerate(val):
-                    if type(item) == dict:
+                    if type(item) is dict:
                         clean_work_dict(item)
-                    elif type(item) == str:
+                    elif type(item) is str:
                         work_dict[key][i] = convert_str(item)
-            elif type(val) == str:
+            elif type(val) is str:
                 work_dict[key] = convert_str(val)
     return work_dict
 
@@ -106,7 +106,7 @@ def parse_child(child, child_dict):
     for i, grandchild in enumerate(child):
         if len(grandchild) > 0:
             if grandchild.tag in child_dict:
-                #print("Warning: tag already exists", grandchild.tag)
+                # print("Warning: tag already exists", grandchild.tag)
                 prev_content = child_dict[grandchild.tag]
                 child_dict[grandchild.tag] = [prev_content]
                 child_dict[grandchild.tag].append(grandchild.attrib)
@@ -115,7 +115,7 @@ def parse_child(child, child_dict):
                 child_dict[grandchild.tag] = grandchild.attrib
                 parse_child(grandchild, child_dict[grandchild.tag])
         else:
-            if not grandchild.tag in child_dict:
+            if grandchild.tag not in child_dict:
                 child_dict[grandchild.tag] = []
 
             if len(grandchild.attrib) > 0:
@@ -183,13 +183,12 @@ if __name__ == "__main__":
         # Retrieve tracking border datagrams and save in csv file
         tracking_border = [datagram for datagram in relevant_datagrams if datagram['type'] == 'TBR0']
         df_tracking_border = pd.DataFrame(tracking_border)
-        #df_tracking_border.to_csv(os.path.join(par['outputdir'], f'{raw_file.replace(".raw", "")}_TBR0.csv'))
+        # df_tracking_border.to_csv(os.path.join(par['outputdir'], f'{raw_file.replace(".raw", "")}_TBR0.csv'))
 
         # Retrieve tracking info datagrams and save in csv file
         tracking_info = [datagram for datagram in relevant_datagrams if datagram['type'] == 'TNF0']
         df_tracking_info = pd.DataFrame(tracking_info)
-        #df_tracking_info.to_csv(os.path.join(par['outputdir'], f'{raw_file.replace(".raw", "")}_TFN0.csv'))
-
+        # df_tracking_info.to_csv(os.path.join(par['outputdir'], f'{raw_file.replace(".raw", "")}_TFN0.csv'))
 
     # Update track files based on work file, if work file is specified
     if "work_path" in par:

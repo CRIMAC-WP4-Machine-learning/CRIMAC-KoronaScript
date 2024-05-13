@@ -55,37 +55,37 @@ FMtestDataSets.to_csv('FMtestdata.csv')
 
 for _testdata in FMtestDataSets["dataset"]:
     _FMtestDataSets = FMtestDataSets[FMtestDataSets["dataset"] == _testdata]
-    inputdir = par["inputdir"]+_FMtestDataSets["RAW_files"].astype('string').values[0]
-    outputdir = (par["outputdir"]+'/'+_FMtestDataSets[
-        "start_time"]+'/'+_FMtestDataSets[
-            "dataset"]+'/ACOUSTIC/GRIDDED/').astype('string').values[0]
+    inputdir = par["inputdir"] + _FMtestDataSets["RAW_files"].astype('string').values[0]
+    outputdir = (par["outputdir"] + '/' + _FMtestDataSets[
+        "start_time"] + '/' + _FMtestDataSets[
+            "dataset"] + '/ACOUSTIC/GRIDDED/').astype('string').values[0]
     os.makedirs(outputdir, exist_ok=True)
 
     try:
         # Instanitate the class
         ksi = ks.KoronaScript()
-        
+
         # Hack:
         if _testdata == 'T2023002':
             MainFrequency = "200"
         else:
             MainFrequency = "38"
-        
+
         # Add the pulsecompression module and write to nc
-        ksi.add(ksm.NetcdfWriter(Active = "true",
-                                 DirName = dirname,
-                                 MainFrequency = MainFrequency,
-                                 WriterType = "CHANNEL_GROUPS",
-                                 GriddedOutputType = "PULSE_COMPRESSION",
-                                 WriteAngels = "true",
-                                 FftWindowSize = "2",
-                                 DeltaFrequency = "1",
-                                 ChannelGroupOutputType = "PULSE_COMPRESSION"))
+        ksi.add(ksm.NetcdfWriter(Active="true",
+                                 DirName=dirname,
+                                 MainFrequency=MainFrequency,
+                                 WriterType="CHANNEL_GROUPS",
+                                 GriddedOutputType="PULSE_COMPRESSION",
+                                 WriteAngels="true",
+                                 FftWindowSize="2",
+                                 DeltaFrequency="1",
+                                 ChannelGroupOutputType="PULSE_COMPRESSION"))
         ksi.write()
-        ksi.run(src=inputdir, dst=outputdir) # Begrening på kjernar
+        ksi.run(src=inputdir, dst=outputdir)  # Begrening på kjernar
 
         # List NC files
-        ncfiles = glob.glob(outputdir+dirname+'/*.nc')
+        ncfiles = glob.glob(outputdir + dirname + '/*.nc')
 
         # Open dataset for file 0
         nc_dataset = Dataset(ncfiles[0], "r")
@@ -96,18 +96,16 @@ for _testdata in FMtestDataSets["dataset"]:
         # Average across channels and calculate the absolute value from the complex pc
         # values (Eq. 8 in
         # https://github.com/CRIMAC-WP4-Machine-learning/CRIMAC-Raw-To-Svf-TSf/blob/main/Paper/Manuscript.pdf)
-        
+
         f, ax = plt.subplots(1, len(data))
         for i in range(0, len(data)):
             y_pc_n = np.sqrt(np.square(data[i].pulse_compressed_re.mean(
-                dim='sector')) +
-                             np.square(data[i].pulse_compressed_im.mean(
-                                 dim='sector'))).transpose()
+                dim='sector')) + np.square(data[i].pulse_compressed_im.mean(dim='sector'))).transpose()
             # Plot the absolute values of the pc data
-        quadmesh  = ax[i].pcolormesh(10*np.log10(y_pc_n))
-        
-        plt.savefig((par["outputdir"]+'/'+_FMtestDataSets["dataset"]+'.png').astype('string').values[0])
+        quadmesh = ax[i].pcolormesh(10 * np.log10(y_pc_n))
+
+        plt.savefig((par["outputdir"] + '/' + _FMtestDataSets["dataset"] + '.png').astype('string').values[0])
     except:
         print('**********************************************')
-        print('Failed: '+_testdata)
+        print('Failed: ' + _testdata)
         print('**********************************************')
