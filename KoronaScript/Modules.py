@@ -1,6 +1,6 @@
 # Auto-generated, do not edit directly
 # see genmodule.py
-from .Configuration import modules_spec
+
 from .KoronaModule import KoronaModule
 
 class AngleDeletion(KoronaModule):
@@ -292,4 +292,3 @@ class NetcdfWriter(KoronaModule):
     """Writes to a .nc file"""
     def __init__(self, **parameters):
         super().__init__('NetcdfWriter', **parameters)
-

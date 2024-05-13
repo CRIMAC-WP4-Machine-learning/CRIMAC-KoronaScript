@@ -10,9 +10,8 @@ import subprocess
 import tempfile
 import os
 import sys
-import json
 
-from .KoronaModule import KoronaModule, global_spec
+from .KoronaModule import global_spec
 
 lsss = os.getenv('LSSS')
 if lsss is None:
@@ -21,7 +20,7 @@ if lsss is None:
 class KoronaScript():
     '''Construct, store, and run a set of Korona modules'''
 
-    def __init__(self, **parameters): # global parameters
+    def __init__(self, **parameters):  # global parameters
         self._module_list = []
         self._config = global_spec
         for k in parameters:
@@ -40,7 +39,7 @@ class KoronaScript():
         cfs.write('<?xml version="1.0" encoding="UTF-8"?>\n\n')
         cfs.write('<ConfigFiles context="Korona">\n')
         cfs.write(f'    <parameter name="ModuleConfiguration" ref="CfsDirectory">{cdsname}</parameter>\n')
-        for k,v in self._config.items():
+        for k, v in self._config.items():
             if v is None:
                 cfs.write(f'    <parameter name="{k}"/>\n')
             else:

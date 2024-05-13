@@ -27,11 +27,11 @@ class KoronaModule():
         self._name = name
         self._config = {}
         # Add defaults
-        for k,v in modules_spec[name].items():
+        for k, v in modules_spec[name].items():
             self._config[k] = v
 
         for k in parameters:
-            if k != 'Active' and not k in modules_spec[name]:
+            if k != 'Active' and k not in modules_spec[name]:
                 print(f'Parameter "{k}" not valid for Korona module "{name}" - aborting')
                 exit(-1)
             self._config[k] = parameters[k]
@@ -45,18 +45,18 @@ class KoronaModule():
         for k in self._config:
             if self._config[k] is None:
                 res += f'      <parameter name="{k}"/>\n'
-            elif isinstance(self._config[k],list):
+            elif isinstance(self._config[k], list):
                 res += f'      <parameter name="{k}">'
                 for v in self._config[k]:
-                    res += str(v)+','
-                res = res[:-1] # remove last comma
+                    res += str(v) + ','
+                res = res[:-1]  # remove last comma
                 res += '</parameter>\n'
-            elif isinstance(self._config[k],dict):
+            elif isinstance(self._config[k], dict):
                 res += f'      <parameter name="{k}">\n'
                 # Should maybe call recursively?  Can they be lists or dicts?
-                for key,val in self._config[k].items():
+                for key, val in self._config[k].items():
                     res += f'       <parameter name="{key}">{val}</parameter>\n'
-                res +=  '      </parameter>\n'
+                res += '      </parameter>\n'
             else:
                 res += (f'      <parameter name="{k}">{self._config[k]}</parameter>\n')
         res += ('    </parameters>\n')
