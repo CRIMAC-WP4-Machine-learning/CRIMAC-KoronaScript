@@ -1,3 +1,4 @@
 matplotlib
 netCDF4
 xarray
+pytest
