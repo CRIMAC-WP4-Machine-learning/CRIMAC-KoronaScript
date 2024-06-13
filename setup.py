@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='koronascript',
-      version='0.1',
+      version='0.2',
       description='Wrapper around Korona modules for processing echosounder data',
       long_description=open('README.md').read(),
       long_description_content_type='text/markdown',
