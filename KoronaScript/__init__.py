@@ -77,9 +77,11 @@ class KoronaScript():
             for v in ['java.library.path', 'jna.library.path']:
                 javaopts.append(f'-D{v}={libpath}')
 
-        res = subprocess.run([java] + javaopts + ['no.imr.korona.main.KoronaCliMain', 'batch', '--cfs', cfsname, '--source', src, '--destination', dst])
+        cmd = [java] + javaopts + ['no.imr.korona.main.KoronaCliMain', 'batch', '--cfs', cfsname, '--source', src, '--destination', dst]
+        if debug: print('Running:\n  ', cmd)
+        res = subprocess.run(cmd, capture_output=True, text=True)
         if debug: print(res.stdout)
         if res.returncode != 0:
-            print(f'Warning: Java subprocess returned error code {res.returncode}')
-            print('Errors:')
+            print(f'Warning: Java subprocess returned error code {res.returncode}:')
             print(res.stderr)
+        return res.returncode
