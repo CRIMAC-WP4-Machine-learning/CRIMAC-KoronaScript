@@ -82,6 +82,6 @@ class KoronaScript():
         res = subprocess.run(cmd, capture_output=True, text=True)
         if debug: print(res.stdout)
         if res.returncode != 0:
-            print(f'Warning: Java subprocess returned error code {res.returncode}:')
-            print(res.stderr)
+            err_str = f'Korona subprocess returned an error code: {res.returncode}\n' + '----------------------------------------\n' + res.stderr
+            raise Exception(err_str)
         return res.returncode
