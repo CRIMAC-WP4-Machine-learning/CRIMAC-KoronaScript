@@ -14,9 +14,10 @@ https://marec.no/tmp/lsss-2.16.0-alpha-20230922-1417-linux.zip
 
 https://marec.no/tmp/lsss-2.16.0-alpha-20230922-1417-windows.zip
 
-If you run linux you need to install the netcdf library separately:
+If you run linux you need to install the netcdf separately:
 
-`apt-get install libnetcdf`
+`apt-get install libnetcdf` or `sudo apt install libnetcdf-dev`
+
 
 ### Add license 
 
