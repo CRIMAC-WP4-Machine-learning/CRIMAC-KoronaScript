@@ -54,7 +54,7 @@ class KoronaScript():
         cds.write('  </modules>\n')
         cds.write('</ModuleContainer>\n')
 
-    def run(self, src, dst):
+    def run(self, src, dst, debug=False):
         '''Save the files (to /tmp?) and call Korona to execute them'''
         cfs, cfsname = tempfile.mkstemp(suffix='.cfs')
         cds, cdsname = tempfile.mkstemp(suffix='.cds')
@@ -78,7 +78,7 @@ class KoronaScript():
                 javaopts.append(f'-D{v}={libpath}')
 
         res = subprocess.run([java] + javaopts + ['no.imr.korona.main.KoronaCliMain', 'batch', '--cfs', cfsname, '--source', src, '--destination', dst])
-        print(res.stdout)
+        if debug: print(res.stdout)
         if res.returncode != 0:
             print(f'Warning: Java subprocess returned error code {res.returncode}')
             print('Errors:')
