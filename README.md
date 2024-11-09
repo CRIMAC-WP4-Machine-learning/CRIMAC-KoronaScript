@@ -12,7 +12,11 @@ Download the appropriate version from here:
 
 https://marec.no/tmp/lsss-2.16.0-alpha-20230922-1417-linux.zip
 
+https://marec.no/tmp/lsss-2.18.0-alpha-20240918-0847-linux.zip
+
 https://marec.no/tmp/lsss-2.16.0-alpha-20230922-1417-windows.zip
+
+https://marec.no/tmp/lsss-2.18.0-alpha-20240918-0847-windows.zip
 
 If you run linux you need to install the netcdf separately:
 
