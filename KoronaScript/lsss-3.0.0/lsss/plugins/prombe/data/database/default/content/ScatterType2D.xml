@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<ScatterType2D>
-   <i scatterType2D="1000" scatterType2DName="scatter_pelagic_2D"/>
-   <i scatterType2D="2000" scatterType2DName="scatter_bottom_2D"/>
-</ScatterType2D>

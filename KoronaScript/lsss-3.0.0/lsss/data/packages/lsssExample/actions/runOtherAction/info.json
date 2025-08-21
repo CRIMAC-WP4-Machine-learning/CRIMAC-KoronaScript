@@ -1,7 +1,0 @@
-{
-  "label" : "Run other action",
-  "tooltip" : "How to run other actions.",
-  "icon" : "",
-  "showDialog" : true,
-  "inputParameters" : [ ]
-}

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<PromusTransducer>
-   <parameters>
-      <parameter name="VerticalOffset">0</parameter>
-      <parameter name="BlindZone">0</parameter>
-      <parameter name="TransducerOrientation">270</parameter>
-   </parameters>
-</PromusTransducer>

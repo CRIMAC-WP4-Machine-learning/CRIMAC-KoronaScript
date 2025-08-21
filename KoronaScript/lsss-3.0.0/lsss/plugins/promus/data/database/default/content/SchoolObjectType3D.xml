@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<SchoolObjectType3D>
-   <i schoolObjectType3D="10" schoolObjectType3DDescription="SchoolAsDetectedUncorrected" schoolObjectType3DName="School as detected uncorrected"/>
-   <i schoolObjectType3D="11" schoolObjectType3DDescription="SchoolAsDetectedCorrected" schoolObjectType3DName="School as detected corrected"/>
-   <i schoolObjectType3D="40" schoolObjectType3DDescription="SchoolKernelUncorrected" schoolObjectType3DName="School kernel uncorrected"/>
-   <i schoolObjectType3D="41" schoolObjectType3DDescription="SchoolKernelCorrected" schoolObjectType3DName="School kernel corrected"/>
-   <i schoolObjectType3D="100" schoolObjectType3DDescription="EchogramSlice" schoolObjectType3DName="Echogram slice"/>
-</SchoolObjectType3D>

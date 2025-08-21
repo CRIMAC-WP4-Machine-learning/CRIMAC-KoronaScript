@@ -15,12 +15,21 @@ import importlib.resources as resources
 
 from .KoronaModule import global_spec
 
+CURRENT_LSSS='lsss-3.0.0-20250204-0841'
+
 if os.getenv('LSSS') is not None:
     lsss = os.getenv('LSSS')
     print(f'KoronaScript: Using external LSSS from variable $LSSS={lsss}.')
 else:
     with resources.files('KoronaScript').joinpath('lsss-3.0.0') as lssspath:
         lsss = str(lssspath)
+        if not os.path.exists(lsss):
+            basedir = os.path.dirname(lsss)
+            print(f'{lsss} does not exist, downloading it.')
+            os.system(f'curl https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-linux.zip -o "{basedir}/{CURRENT_LSSS}.zip"')
+            os.system(f'unzip "{basedir}/{CURRENT_LSSS}.zip" -d "{basedir}"')
+            os.system(f'unzip "{os.path.dirname(lsss)}/{CURRENT_LSSS}/lsss-3.0.0-linux.zip" -d "{basedir}"')
+
 
 class KoronaScript():
     '''Construct, store, and run a set of Korona modules'''
