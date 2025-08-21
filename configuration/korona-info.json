@@ -1,8 +1,8 @@
 {
-  "version" : "2.16.0-alpha",
-  "buildTime" : "2023-10-03T12:20:03.941Z",
-  "gitCommit" : "XXX",
-  "activePlugins" : [ "Korona", "KoronaIncubator" ],
+  "version" : "3.0.0",
+  "buildTime" : "2025-02-04T07:41:40Z",
+  "gitCommit" : "c0aac88159053bc42063363aeb77615e87300e97",
+  "activePlugins" : [ "Korona" ],
   "modules" : [ {
     "id" : "AngleDeletionModule",
     "description" : "Converts split beam data to single beam data",
@@ -49,8 +49,14 @@
       "id" : "SplitCount",
       "description" : "Number of bands per broadband channel",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 3
+    }, {
+      "id" : "SplitBandwidth",
+      "description" : "Bandwidth of the auto-split bands. The default is channel bandwidth / split count",
+      "unit" : "kHz",
+      "allowedValuesDescription" : "Empty or > 0",
+      "defaultValue" : ""
     }, {
       "id" : "StopBandDistance",
       "description" : "Distance between pass- and stopband",
@@ -69,7 +75,7 @@
     }, {
       "id" : "DownsamplingFactor",
       "description" : "Downsampling factor",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 1
     }, {
       "id" : "DownsamplingSampleSize",
@@ -138,13 +144,13 @@
       "id" : "TotalDelta",
       "description" : "Minimum difference of current sample to search window median to be spike candidate",
       "unit" : "dB",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 15.0
     }, {
       "id" : "VerticalDelta",
       "description" : "Minimum difference of search column median to (most) neighbouring pings to be spike candidate",
       "unit" : "dB",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 15.0
     }, {
       "id" : "Debug",
@@ -159,42 +165,42 @@
       "id" : "VerticalMedianSearchHeight",
       "description" : "Half the height of the search column in number of samples",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 50
     }, {
       "id" : "WindowMedianSearchHeight",
       "description" : "Half the height of the search window in number of samples",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 35
     }, {
       "id" : "VerticalMedianSearchDuration",
       "description" : "Half the height of the search column in milliseconds",
       "unit" : "ms",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 2.0
     }, {
       "id" : "WindowMedianSearchDuration",
       "description" : "Half the height of the search window in milliseconds",
       "unit" : "ms",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 4.4
     }, {
       "id" : "VerticalMedianSearchDistance",
       "description" : "Half the height of the search column in meters",
       "unit" : "m",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 1.9
     }, {
       "id" : "WindowMedianSearchDistance",
       "description" : "Half the height of the search window in meters",
       "unit" : "m",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 6.6
     } ]
   }, {
     "id" : "CategorizationModule",
-    "description" : "Module for categorization",
+    "description" : "Categorizes each pixel using the configured training data",
     "requiredConfigFiles" : [ "Categorization", "TransducerRanges" ],
     "parameters" : [ {
       "id" : "Active",
@@ -208,7 +214,7 @@
       "id" : "CategoryCount",
       "description" : "Number of categories per pixel to put in the categorization datagrams",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 3
     }, {
       "id" : "ActiveFeatures",
@@ -237,7 +243,7 @@
       "id" : "ContextualIterations",
       "description" : "Number of contextual correction iterations",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 3
     }, {
       "id" : "UseMinLogSv",
@@ -289,8 +295,22 @@
       "allowedValuesDescription" : "> 0",
       "defaultValue" : ""
     }, {
+      "id" : "DataType",
+      "description" : "The selected data type",
+      "allowedValues" : [ "", "CW_REAL_DATA", "CW_COMPLEX_DATA", "FM_COMPLEX_DATA" ],
+      "defaultValue" : ""
+    }, {
+      "id" : "TransmitMode",
+      "description" : "The selected transmit mode",
+      "allowedValues" : [ "", "ACTIVE", "PASSIVE" ],
+      "defaultValue" : ""
+    }, {
+      "id" : "PingId",
+      "description" : "Used in connection with advanced sequencing of different pulse types",
+      "defaultValue" : ""
+    }, {
       "id" : "KeepSpecified",
-      "description" : "If selected then keep only the specified channels",
+      "description" : "If selected, then keep data on only the specified channels",
       "defaultValue" : false
     } ]
   }, {
@@ -321,13 +341,27 @@
       "allowedValuesDescription" : "> 0",
       "defaultValue" : ""
     }, {
+      "id" : "DataType",
+      "description" : "The data type to select. NB: Only the first few pings will determine if a channel is selected",
+      "allowedValues" : [ "", "CW_REAL_DATA", "CW_COMPLEX_DATA", "FM_COMPLEX_DATA" ],
+      "defaultValue" : ""
+    }, {
+      "id" : "TransmitMode",
+      "description" : "The transmit mode to select. NB Only the first few pings will determine if a channel is selected",
+      "allowedValues" : [ "", "ACTIVE", "PASSIVE" ],
+      "defaultValue" : ""
+    }, {
+      "id" : "PingId",
+      "description" : "Used in connection with advanced sequencing of different pulse types",
+      "defaultValue" : ""
+    }, {
       "id" : "KeepSpecified",
-      "description" : "If selected then keep only the specified channels",
+      "description" : "If selected, then keep only the specified channels",
       "defaultValue" : false
     } ]
   }, {
     "id" : "CombinationModule",
-    "description" : "Module for generating combination echograms",
+    "description" : "Generates combination echograms",
     "parameters" : [ {
       "id" : "Active",
       "description" : "If the module is not active then all datagrams pass unaltered through it",
@@ -340,23 +374,23 @@
       "id" : "FirstOperandKhz",
       "description" : "Frequency of the first operand",
       "unit" : "kHz",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0
     }, {
       "id" : "SecondOperandKhz",
       "description" : "Frequency of the second operand",
       "unit" : "kHz",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0
     }, {
       "id" : "FirstOperandChannel",
       "description" : "Channel of the first operand (used if First operand kHz = 0)",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 1
     }, {
       "id" : "SecondOperandChannel",
       "description" : "Channel of the second operand (used if Second operand kHz = 0)",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 2
     }, {
       "id" : "LogarithmicOperands",
@@ -395,7 +429,7 @@
       "id" : "VerticalSpace",
       "description" : "Vertical space above button in the module editor",
       "unit" : "pt",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 8
     }, {
       "id" : "Label",
@@ -466,6 +500,11 @@
       "description" : "",
       "unit" : "m",
       "defaultValue" : ""
+    }, {
+      "id" : "MaxBelowBottom",
+      "description" : "Distance below the detected coordinated bottom",
+      "unit" : "m",
+      "defaultValue" : ""
     } ]
   }, {
     "id" : "DepthDependentResamplingModule",
@@ -487,12 +526,12 @@
       "id" : "SampleDistanceAtRange100",
       "description" : "Sample distance at 100 m range",
       "unit" : "m",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0.0
     } ]
   }, {
     "id" : "DepthModule",
-    "description" : "Bottom depth detection module",
+    "description" : "Detects the bottom depth",
     "requiredConfigFiles" : [ "TransducerRanges" ],
     "parameters" : [ {
       "id" : "Active",
@@ -511,7 +550,7 @@
       "id" : "MinDepthLimit",
       "description" : "The maximal distance above bottom accepted as the minimal bottom distance",
       "unit" : "m",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 10.0
     }, {
       "id" : "MinDepthValueFraction",
@@ -526,7 +565,7 @@
     }, {
       "id" : "MinimumDepthThresholdFactor",
       "description" : "Shallowest acceptable depth relative to max depth",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0.99
     }, {
       "id" : "MaxRangeFactor",
@@ -541,14 +580,19 @@
       "id" : "MinBottomDepth",
       "description" : "The detected bottom must be minimum this value",
       "unit" : "m",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0.0
     }, {
       "id" : "MaxBottomDepth",
       "description" : "The detected bottom must be maximum this value",
       "unit" : "m",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 9999.0
+    }, {
+      "id" : "PreferredKHz",
+      "description" : "Preferred frequency for finding coordinated bottom",
+      "unit" : "kHz",
+      "defaultValue" : ""
     }, {
       "id" : "MinKHz",
       "description" : "Only use channels with at least this frequency",
@@ -611,7 +655,7 @@
       "id" : "VertResolution",
       "description" : "Vertical resolution of filter in samples",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 1
     } ]
   }, {
@@ -633,7 +677,7 @@
     }, {
       "id" : "DownsamplingFactor",
       "description" : "Downsampling factor",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 1
     }, {
       "id" : "DownsamplingSampleSize",
@@ -666,6 +710,23 @@
       "id" : "ContinueAcrossFiles",
       "description" : "Continue the current wave index number across files",
       "defaultValue" : false
+    } ]
+  }, {
+    "id" : "EchoLineCompressionModule",
+    "description" : "Keeps only data above a given threshold",
+    "parameters" : [ {
+      "id" : "Active",
+      "description" : "If the module is not active then all datagrams pass unaltered through it",
+      "defaultValue" : true
+    }, {
+      "id" : "Comment",
+      "description" : "",
+      "defaultValue" : ""
+    }, {
+      "id" : "Threshold",
+      "description" : "Only samples above the threshold will be kept",
+      "unit" : "dB",
+      "defaultValue" : -82.0
     } ]
   }, {
     "id" : "EdgeDetectionModule",
@@ -717,7 +778,7 @@
       "id" : "VertResolution",
       "description" : "Vertical resolution of filter in samples",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 1
     } ]
   }, {
@@ -788,7 +849,7 @@
       "id" : "VerticalExtent",
       "description" : "A sample below the threshold will erode all samples closer than this distance vertically",
       "unit" : "m",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 1.0
     } ]
   }, {
@@ -837,12 +898,12 @@
       "id" : "VertResolution",
       "description" : "Vertical resolution of filter in samples",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 1
     } ]
   }, {
     "id" : "ExpressionModule",
-    "description" : "Module for generating combination echograms by an expression",
+    "description" : "Generates combination echograms by a specified expression",
     "parameters" : [ {
       "id" : "Active",
       "description" : "If the module is not active then all datagrams pass unaltered through it",
@@ -858,7 +919,7 @@
     } ]
   }, {
     "id" : "FillMissingDataModule",
-    "description" : "Creates missing pingdata",
+    "description" : "Adds missing channel data",
     "parameters" : [ {
       "id" : "Active",
       "description" : "If the module is not active then all datagrams pass unaltered through it",
@@ -870,7 +931,7 @@
     } ]
   }, {
     "id" : "Filter3X3Module",
-    "description" : "Class implementing a 3�3 filter",
+    "description" : "Applies a 3×3 filter",
     "parameters" : [ {
       "id" : "Active",
       "description" : "If the module is not active then all datagrams pass unaltered through it",
@@ -954,7 +1015,7 @@
     } ]
   }, {
     "id" : "FiskViewDisplayModule",
-    "description" : "Display module",
+    "description" : "Displays an echogram for each channel",
     "parameters" : [ {
       "id" : "Active",
       "description" : "If the module is not active then all datagrams pass unaltered through it",
@@ -1049,8 +1110,73 @@
       "defaultValue" : 1000.0
     } ]
   }, {
+    "id" : "NetcdfWriterModule",
+    "description" : "Writes to a .nc file",
+    "optionalConfigFiles" : [ "HorizontalTransducerOffsets", "VerticalTransducerOffsets" ],
+    "parameters" : [ {
+      "id" : "Active",
+      "description" : "If the module is not active then all datagrams pass unaltered through it",
+      "defaultValue" : true
+    }, {
+      "id" : "Comment",
+      "description" : "",
+      "defaultValue" : ""
+    }, {
+      "id" : "DirName",
+      "description" : "The netCDF files are written to this sub folder in the destination directory",
+      "defaultValue" : "netcdf"
+    }, {
+      "id" : "MainFrequency",
+      "description" : "The channel with the main frequency is placed first in the output file.\nIf unspecified, the first channel is used",
+      "unit" : "kHz",
+      "allowedValuesDescription" : "Empty or > 0",
+      "defaultValue" : "38"
+    }, {
+      "id" : "WriterType",
+      "description" : "How to structure the output data",
+      "allowedValues" : [ "GRIDDED", "CHANNEL_GROUPS" ],
+      "defaultValue" : "GRIDDED"
+    }, {
+      "id" : "GriddedOutputType",
+      "description" : "Output data in addition to the basic information",
+      "allowedValues" : [ "EMPTY", "SV_AND_ANGLES", "PULSE_COMPRESSION", "BROADBAND_SV" ],
+      "defaultValue" : "SV_AND_ANGLES"
+    }, {
+      "id" : "ChannelGroupOutputType",
+      "description" : "Output data in addition to the basic information",
+      "allowedValues" : [ "EMPTY", "PULSE_COMPRESSION", "BROADBAND_SV" ],
+      "defaultValue" : "PULSE_COMPRESSION"
+    }, {
+      "id" : "DeltaRange",
+      "description" : "Leave blank to determine automatically",
+      "unit" : "m",
+      "allowedValuesDescription" : "Empty or > 0",
+      "defaultValue" : ""
+    }, {
+      "id" : "MaxRange",
+      "description" : "Leave blank to determine automatically",
+      "unit" : "m",
+      "allowedValuesDescription" : "Empty or > 0",
+      "defaultValue" : ""
+    }, {
+      "id" : "FftWindowSize",
+      "description" : "Size of the FFT window in units of pulse length",
+      "allowedValuesDescription" : "> 0",
+      "defaultValue" : 2.0
+    }, {
+      "id" : "DeltaFrequency",
+      "description" : "Resolution of the broadband frequency array",
+      "unit" : "kHz",
+      "allowedValuesDescription" : "> 0",
+      "defaultValue" : 1.0
+    }, {
+      "id" : "WriteAngels",
+      "description" : "If selected, then the output data will include arrays for alongship and athwartship angles",
+      "defaultValue" : true
+    } ]
+  }, {
     "id" : "NoiseAcceptanceModule",
-    "description" : "Median noise acceptance",
+    "description" : "Compares detected noise with values recorded in files",
     "parameters" : [ {
       "id" : "Active",
       "description" : "If the module is not active then all datagrams pass unaltered through it",
@@ -1085,7 +1211,7 @@
     } ]
   }, {
     "id" : "NoiseMedianQuantificationModule",
-    "description" : "Median noise quantification",
+    "description" : "Produces noise quantification datagrams using the median of selected sample values",
     "parameters" : [ {
       "id" : "Active",
       "description" : "If the module is not active then all datagrams pass unaltered through it",
@@ -1098,7 +1224,7 @@
       "id" : "PingHistory",
       "description" : "Number of historical pings to use when computing new noise values",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 10
     }, {
       "id" : "NoiseSamplesPerBeam",
@@ -1110,7 +1236,7 @@
       "id" : "DetectionDistance",
       "description" : "The distance for each beam used for noise detection",
       "unit" : "m",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 50.0
     }, {
       "id" : "InnermostDistance",
@@ -1137,7 +1263,7 @@
       "id" : "SmoothInterval",
       "description" : "Number of samples to smooth vertically before making histogram",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 5
     }, {
       "id" : "Mask",
@@ -1176,25 +1302,25 @@
       "id" : "HistogramInitializationCellCount",
       "description" : "Number of cells in the histograms at initialization",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 500
     }, {
       "id" : "HistogramMaximumCellCount",
       "description" : "Maximum number of cells in the histograms",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 2000
     }, {
       "id" : "HistogramInitializationSampleCount",
       "description" : "Minimum count of noise samples at initialization of the histograms",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 1000
     }, {
       "id" : "HistogramMinimumSampleCount",
       "description" : "Minimum number of noise samples in the histograms",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 25000
     }, {
       "id" : "HistogramSmooth",
@@ -1202,7 +1328,7 @@
       "defaultValue" : true
     }, {
       "id" : "HistogramSmoothFactor",
-      "description" : "Diffusion time step = HistogramSmoothFactor � dx^2",
+      "description" : "Diffusion time step = HistogramSmoothFactor × dx^2",
       "allowedValuesDescription" : "> 0",
       "defaultValue" : 100.0
     }, {
@@ -1211,7 +1337,7 @@
       "defaultValue" : false
     }, {
       "id" : "Sdev",
-      "description" : "No stdev left of noise-pdf top (NT) to be used as high noise (NH). NB! Not used to estimate average noise NE.",
+      "description" : "No stdev right of noise-pdf top (NT) to be used as high noise (NH). NB! Not used to estimate average noise NE.",
       "allowedValuesDescription" : "> 0",
       "defaultValue" : 10.0
     }, {
@@ -1261,8 +1387,13 @@
       "id" : "MaxBufferSize",
       "description" : "Maximum number of pings in buffer when searching for first noise parameter datagram",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 10
+    }, {
+      "id" : "SampleSizeCorrection",
+      "description" : "<html>Incubating feature: Corrected N<sub>H</sub> = N<sub>E</sub> + (N<sub>H</sub> - N<sub>E</sub>) * sqrt(n)",
+      "allowedValuesDescription" : "Empty or > 0",
+      "defaultValue" : ""
     } ]
   }, {
     "id" : "NoiseVisualizationModule",
@@ -1276,16 +1407,10 @@
       "description" : "",
       "defaultValue" : ""
     }, {
-      "id" : "UpdatePeriod",
-      "description" : "Number of pings between each graph update",
-      "unit" : "1",
-      "allowedValuesDescription" : "? 1",
-      "defaultValue" : 20
-    }, {
       "id" : "TimeSeriesLength",
       "description" : "Number of seconds in the time series",
       "unit" : "s",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 200
     }, {
       "id" : "HistogramSpan",
@@ -1296,7 +1421,7 @@
       "id" : "MedianSampleCount",
       "description" : "Number of equidistant samples used for finding median noise",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 500
     } ]
   }, {
@@ -1326,13 +1451,13 @@
       "id" : "PingsToSkipInitially",
       "description" : "Number of pings to skip initially",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0
     }, {
       "id" : "PingsToSkip",
       "description" : "Number of pings to skip periodically",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0
     } ]
   }, {
@@ -1419,23 +1544,23 @@
     }, {
       "id" : "MinResidualErrorThreshold",
       "description" : "Threshold for stopping iteration",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0.01
     }, {
       "id" : "MaxResidualErrorThreshold",
       "description" : "Threshold for accepting solution",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0.2
     }, {
       "id" : "LevenbergMarquardtFactor",
       "description" : "Trade-off between residual error and solution norm",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 5.0E-4
     }, {
       "id" : "MaxIter",
       "description" : "Maximum iteration count for each model",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 4
     }, {
       "id" : "HardShelled",
@@ -1572,7 +1697,7 @@
     } ]
   }, {
     "id" : "PluginModule",
-    "description" : "Plugin (beta)",
+    "description" : "For writing Java code that implements an API interface for KORONA module computations",
     "parameters" : [ {
       "id" : "Active",
       "description" : "If the module is not active then all datagrams pass unaltered through it",
@@ -1606,7 +1731,7 @@
     } ]
   }, {
     "id" : "RemoveBottomModule",
-    "description" : "Removes bottom data",
+    "description" : "Assigns a specified value to samples close to the detected bottom",
     "parameters" : [ {
       "id" : "Active",
       "description" : "If the module is not active then all datagrams pass unaltered through it",
@@ -1654,13 +1779,13 @@
       "id" : "Above",
       "description" : "Upper bottom limit is this many samples above bottom",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0
     }, {
       "id" : "Below",
       "description" : "Lower bottom limit is this many samples below bottom",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 100
     }, {
       "id" : "RemoveAboveBottom",
@@ -1715,13 +1840,13 @@
       "id" : "InitializationDatagramCount",
       "description" : "Number of datagrams from each channel used to determine rescaling factors",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 10
     }, {
       "id" : "InitializationMaxPingCount",
       "description" : "Maximum number of pings to buffer up when finding rescaling factors",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 100
     } ]
   }, {
@@ -1755,19 +1880,19 @@
       "id" : "Upper sample offset",
       "description" : "Number of samples excluded at top of region",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 5
     }, {
       "id" : "Lower sample offset",
       "description" : "Number of samples excluded at bottom of region",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 5
     }, {
       "id" : "HorizontalOffset",
       "description" : "Number of pings excluded at the left and right edges of region",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0
     }, {
       "id" : "SecondaryCategoryFraction",
@@ -1777,18 +1902,18 @@
     }, {
       "id" : "Fill factor for cells",
       "description" : "The fill factor of cells must be above this value for cells to be used in the analysis of schools",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0.5
     }, {
       "id" : "MinFractionCategorizedCells",
       "description" : "The fraction of categorized cells has to be above this factor for the school to be categorized",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0.5
     }, {
       "id" : "MinCells",
       "description" : "If the number of cells are less than this the data will be merged",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 3
     }, {
       "id" : "SchoolCategorizationDistribution",
@@ -1828,13 +1953,13 @@
       "id" : "MinDepth",
       "description" : "Minimum depth for school detection",
       "unit" : "m",
-      "allowedValuesDescription" : "Empty or ? 0",
+      "allowedValuesDescription" : "Empty or ≥ 0",
       "defaultValue" : ""
     }, {
       "id" : "MaxDepth",
       "description" : "Maximum depth for school detection",
       "unit" : "m",
-      "allowedValuesDescription" : "Empty or ? 0",
+      "allowedValuesDescription" : "Empty or ≥ 0",
       "defaultValue" : ""
     }, {
       "id" : "Threshold",
@@ -1937,15 +2062,15 @@
       "defaultValue" : "none"
     }, {
       "id" : "MinPing",
-      "description" : "Number of pings used ? 2 � Min Ping + 1",
+      "description" : "Number of pings used ≥ 2 × Min Ping + 1",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0
     }, {
       "id" : "MaxPing",
-      "description" : "Number of pings used ? 2 � Max Ping + 1",
+      "description" : "Number of pings used ≤ 2 × Max Ping + 1",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 10
     }, {
       "id" : "HorizontalKernelType",
@@ -2020,13 +2145,13 @@
       "id" : "TotalDelta",
       "description" : "Minimum difference of current sample to search window median to be spike candidate",
       "unit" : "dB",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 15.0
     }, {
       "id" : "VerticalDelta",
       "description" : "Minimum difference of search column median to (most) neighbouring pings to be spike candidate",
       "unit" : "dB",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 15.0
     }, {
       "id" : "Debug",
@@ -2041,37 +2166,37 @@
       "id" : "VerticalMedianSearchHeight",
       "description" : "Half the height of the search column in number of samples",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 7
     }, {
       "id" : "WindowMedianSearchHeight",
       "description" : "Half the height of the search window in number of samples",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 35
     }, {
       "id" : "VerticalMedianSearchDuration",
       "description" : "Half the height of the search column in milliseconds",
       "unit" : "ms",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0.9
     }, {
       "id" : "WindowMedianSearchDuration",
       "description" : "Half the height of the search window in milliseconds",
       "unit" : "ms",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 4.4
     }, {
       "id" : "VerticalMedianSearchDistance",
       "description" : "Half the height of the search column in meters",
       "unit" : "m",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 1.3
     }, {
       "id" : "WindowMedianSearchDistance",
       "description" : "Half the height of the search window in meters",
       "unit" : "m",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 6.6
     } ]
   }, {
@@ -2120,7 +2245,7 @@
       "id" : "Delta",
       "description" : "Spot-noise candidate if center value > 93% percentile + Delta",
       "unit" : "dB",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 20.0
     }, {
       "id" : "Debug",
@@ -2190,7 +2315,7 @@
     } ]
   }, {
     "id" : "ThresholdModule",
-    "description" : "Masks out values in specific range on individual channels",
+    "description" : "Masks out values in a specified range on individual channels",
     "parameters" : [ {
       "id" : "Active",
       "description" : "If the module is not active then all datagrams pass unaltered through it",
@@ -2241,7 +2366,7 @@
       "defaultValue" : false
     }, {
       "id" : "CutAbove",
-      "description" : "If selected, all samples with value ? 'Threshold' will become 'Value above'",
+      "description" : "If selected, all samples with value ≥ 'Threshold' will become 'Value above'",
       "defaultValue" : false
     }, {
       "id" : "BelowVal",
@@ -2250,13 +2375,13 @@
       "defaultValue" : -120.0
     }, {
       "id" : "AboveVal",
-      "description" : "Value assigned to samples with value ? 'Threshold'",
+      "description" : "Value assigned to samples with value ≥ 'Threshold'",
       "unit" : "dB",
       "defaultValue" : 0.0
     } ]
   }, {
     "id" : "TimeIntervalModule",
-    "description" : "Module for processing only the pings in a specified time interval",
+    "description" : "Processes only the pings in a specified time interval",
     "parameters" : [ {
       "id" : "Active",
       "description" : "If the module is not active then all datagrams pass unaltered through it",
@@ -2304,7 +2429,7 @@
       "id" : "TowfishBlindZone",
       "description" : "The length of the towfish blind zone. The samples in the blind zone are excluded when merging the towfish data with input data",
       "unit" : "m",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0.0
     }, {
       "id" : "TowfishEchosounderTimeAddition",
@@ -2332,7 +2457,7 @@
       "id" : "MaxBufferSize",
       "description" : "Maximum number of pings in buffer in search for first track info datagrams",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 50
     }, {
       "id" : "KeepValid",
@@ -2446,7 +2571,7 @@
       "id" : "InitiationMinLength",
       "description" : "<html>N<sub>0</sub> - Minimum number of samples for starting a new track",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 1
     }, {
       "id" : "GateFunction",
@@ -2490,29 +2615,29 @@
       "id" : "MaxMissingPings",
       "description" : "<html>N<sub>m</sub> - Maximum number of subsequent missing pings in a track",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 4
     }, {
       "id" : "MaxMissingSamples",
       "description" : "<html>N<sub>e</sub> - Maximum number of missing samples in one ping of a track",
       "unit" : "1",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 2
     }, {
       "id" : "MaxMissingPingsFraction",
       "description" : "MN - Maximum acceptable ratio of missing pings to number of pings in track",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 0.5
     }, {
       "id" : "MinTrackLength",
       "description" : "TL - Minimum acceptable total number of pings in track",
       "unit" : "1",
-      "allowedValuesDescription" : "? 1",
+      "allowedValuesDescription" : "≥ 1",
       "defaultValue" : 8
     }, {
       "id" : "MinSampleToLengthFraction",
       "description" : "NL - Minimum acceptable ratio of total number of samples to number of pings in track",
-      "allowedValuesDescription" : "? 0",
+      "allowedValuesDescription" : "≥ 0",
       "defaultValue" : 2.0
     } ]
   }, {
@@ -2610,71 +2735,6 @@
       "id" : "DirectoryName",
       "description" : "Output directory",
       "defaultValue" : ""
-    } ]
-  }, {
-    "id" : "NetcdfWriterModule",
-    "description" : "Writes to a .nc file",
-    "plugin" : "KoronaIncubator",
-    "parameters" : [ {
-      "id" : "Active",
-      "description" : "If the module is not active then all datagrams pass unaltered through it",
-      "defaultValue" : true
-    }, {
-      "id" : "Comment",
-      "description" : "",
-      "defaultValue" : ""
-    }, {
-      "id" : "DirName",
-      "description" : "The netCDF files are written to this sub folder in the destination directory",
-      "defaultValue" : "netcdf"
-    }, {
-      "id" : "MainFrequency",
-      "description" : "The channel with the main frequency is placed first in the output file",
-      "unit" : "kHz",
-      "allowedValuesDescription" : "> 0",
-      "defaultValue" : 38
-    }, {
-      "id" : "WriterType",
-      "description" : "How to structure the output data",
-      "allowedValues" : [ "GRIDDED", "CHANNEL_GROUPS" ],
-      "defaultValue" : "GRIDDED"
-    }, {
-      "id" : "DeltaRange",
-      "description" : "Leave blank to use the sample distance of the main frequency in the first ping",
-      "unit" : "m",
-      "allowedValuesDescription" : "Empty or > 0",
-      "defaultValue" : ""
-    }, {
-      "id" : "MaxRange",
-      "description" : "Leave blank to use the max range of the main frequency in the first ping",
-      "unit" : "m",
-      "allowedValuesDescription" : "Empty or > 0",
-      "defaultValue" : ""
-    }, {
-      "id" : "GriddedOutputType",
-      "description" : "Output data in addition to the basic information",
-      "allowedValues" : [ "EMPTY", "SV_AND_ANGLES", "PULSE_COMPRESSION", "BROADBAND_SV" ],
-      "defaultValue" : "SV_AND_ANGLES"
-    }, {
-      "id" : "WriteAngels",
-      "description" : "If selected, then the output data will include arrays for alongship and athwartship angles",
-      "defaultValue" : true
-    }, {
-      "id" : "FftWindowSize",
-      "description" : "Size of the FFT window in units of pulse length",
-      "allowedValuesDescription" : "> 0",
-      "defaultValue" : 2.0
-    }, {
-      "id" : "DeltaFrequency",
-      "description" : "Resolution of the broadband frequency array",
-      "unit" : "kHz",
-      "allowedValuesDescription" : "> 0",
-      "defaultValue" : 1.0
-    }, {
-      "id" : "ChannelGroupOutputType",
-      "description" : "Output data in addition to the basic information",
-      "allowedValues" : [ "EMPTY", "PULSE_COMPRESSION" ],
-      "defaultValue" : "PULSE_COMPRESSION"
     } ]
   } ]
 }

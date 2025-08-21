@@ -1,6 +1,6 @@
 # Auto-generated, do not edit directly
 # see genmodule.py
-
+from .Configuration import modules_spec
 from .KoronaModule import KoronaModule
 
 class AngleDeletion(KoronaModule):
@@ -24,7 +24,7 @@ class BubblSpikeFilter(KoronaModule):
         super().__init__('BubblSpikeFilter', **parameters)
 
 class Categorization(KoronaModule):
-    """Module for categorization"""
+    """Categorizes each pixel using the configured training data"""
     def __init__(self, **parameters):
         super().__init__('Categorization', **parameters)
 
@@ -44,7 +44,7 @@ class ChannelRemoval(KoronaModule):
         super().__init__('ChannelRemoval', **parameters)
 
 class Combination(KoronaModule):
-    """Module for generating combination echograms"""
+    """Generates combination echograms"""
     def __init__(self, **parameters):
         super().__init__('Combination', **parameters)
 
@@ -69,7 +69,7 @@ class DepthDependentResampling(KoronaModule):
         super().__init__('DepthDependentResampling', **parameters)
 
 class Depth(KoronaModule):
-    """Bottom depth detection module"""
+    """Detects the bottom depth"""
     def __init__(self, **parameters):
         super().__init__('Depth', **parameters)
 
@@ -87,6 +87,11 @@ class ES60Correction(KoronaModule):
     """Removes the ES60 triangle noise"""
     def __init__(self, **parameters):
         super().__init__('ES60Correction', **parameters)
+
+class EchoLineCompression(KoronaModule):
+    """Keeps only data above a given threshold"""
+    def __init__(self, **parameters):
+        super().__init__('EchoLineCompression', **parameters)
 
 class EdgeDetection(KoronaModule):
     """Detects edges by using Sobel horizontal and vertical filter"""
@@ -109,22 +114,22 @@ class Erode(KoronaModule):
         super().__init__('Erode', **parameters)
 
 class Expression(KoronaModule):
-    """Module for generating combination echograms by an expression"""
+    """Generates combination echograms by a specified expression"""
     def __init__(self, **parameters):
         super().__init__('Expression', **parameters)
 
 class FillMissingData(KoronaModule):
-    """Creates missing pingdata"""
+    """Adds missing channel data"""
     def __init__(self, **parameters):
         super().__init__('FillMissingData', **parameters)
 
 class Filter3X3(KoronaModule):
-    """Class implementing a 3�3 filter"""
+    """Applies a 3×3 filter"""
     def __init__(self, **parameters):
         super().__init__('Filter3X3', **parameters)
 
 class FiskViewDisplay(KoronaModule):
-    """Display module"""
+    """Displays an echogram for each channel"""
     def __init__(self, **parameters):
         super().__init__('FiskViewDisplay', **parameters)
 
@@ -148,13 +153,18 @@ class Median(KoronaModule):
     def __init__(self, **parameters):
         super().__init__('Median', **parameters)
 
+class NetcdfWriter(KoronaModule):
+    """Writes to a .nc file"""
+    def __init__(self, **parameters):
+        super().__init__('NetcdfWriter', **parameters)
+
 class NoiseAcceptance(KoronaModule):
-    """Median noise acceptance"""
+    """Compares detected noise with values recorded in files"""
     def __init__(self, **parameters):
         super().__init__('NoiseAcceptance', **parameters)
 
 class NoiseMedianQuantification(KoronaModule):
-    """Median noise quantification"""
+    """Produces noise quantification datagrams using the median of selected sample values"""
     def __init__(self, **parameters):
         super().__init__('NoiseMedianQuantification', **parameters)
 
@@ -189,7 +199,7 @@ class PlanktonInversion(KoronaModule):
         super().__init__('PlanktonInversion', **parameters)
 
 class Plugin(KoronaModule):
-    """Plugin (beta)"""
+    """For writing Java code that implements an API interface for KORONA module computations"""
     def __init__(self, **parameters):
         super().__init__('Plugin', **parameters)
 
@@ -199,7 +209,7 @@ class PulseCompressionFilter(KoronaModule):
         super().__init__('PulseCompressionFilter', **parameters)
 
 class RemoveBottom(KoronaModule):
-    """Removes bottom data"""
+    """Assigns a specified value to samples close to the detected bottom"""
     def __init__(self, **parameters):
         super().__init__('RemoveBottom', **parameters)
 
@@ -249,12 +259,12 @@ class ThresholdAllChannels(KoronaModule):
         super().__init__('ThresholdAllChannels', **parameters)
 
 class Threshold(KoronaModule):
-    """Masks out values in specific range on individual channels"""
+    """Masks out values in a specified range on individual channels"""
     def __init__(self, **parameters):
         super().__init__('Threshold', **parameters)
 
 class TimeInterval(KoronaModule):
-    """Module for processing only the pings in a specified time interval"""
+    """Processes only the pings in a specified time interval"""
     def __init__(self, **parameters):
         super().__init__('TimeInterval', **parameters)
 
@@ -288,7 +298,3 @@ class Writer(KoronaModule):
     def __init__(self, **parameters):
         super().__init__('Writer', **parameters)
 
-class NetcdfWriter(KoronaModule):
-    """Writes to a .nc file"""
-    def __init__(self, **parameters):
-        super().__init__('NetcdfWriter', **parameters)
