@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ScatterType3D>
+   <i scatterType3D="1000" scatterType3DName="scatter_pelagic_3D"/>
+   <i scatterType3D="2000" scatterType3DName="scatter_bottom_3D"/>
+   <i scatterType3D="3000" scatterType3DName="school_pelagic_3D"/>
+   <i scatterType3D="4000" scatterType3DName="school_bottom_3D"/>
+</ScatterType3D>

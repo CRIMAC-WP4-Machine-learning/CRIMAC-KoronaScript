@@ -11,11 +11,16 @@ import tempfile
 import os
 import sys
 
+import importlib.resources as resources
+
 from .KoronaModule import global_spec
 
-lsss = os.getenv('LSSS')
-if lsss is None:
-    print('KoronaScript: Warning: $LSSS is not set.')
+if os.getenv('LSSS') is not None:
+    lsss = os.getenv('LSSS')
+    print(f'KoronaScript: Using external LSSS from variable $LSSS={lsss}.')
+else:
+    with resources.files('KoronaScript').joinpath('lsss-3.0.0') as lssspath:
+        lsss = str(lssspath)
 
 class KoronaScript():
     '''Construct, store, and run a set of Korona modules'''

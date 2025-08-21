@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<SchoolCategorySystem3D>
+   <i categorySystem="1" categorySystemName="Acoustic Category" categorySystemDescription="Acoustic_Category"/>
+   <i categorySystem="2" categorySystemName="KORONA Category" categorySystemDescription="KORONA_Category"/>
+   <i categorySystem="3" categorySystemName="PROMUS Category" categorySystemDescription="PROMUS_Category"/>
+   <i categorySystem="4" categorySystemName="MOVIES Category" categorySystemDescription="MOVIES_Category"/>
+</SchoolCategorySystem3D>

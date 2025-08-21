@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"no.marec.api.korona","l":"Channel"},{"p":"no.marec.api.korona","l":"ModuleComputation"},{"p":"no.marec.api.korona","l":"Ping"},{"p":"no.marec.api.korona","l":"PingBuffer"},{"p":"no.marec.api.korona","l":"SinglePingModuleComputation"}];updateSearchResults();

@@ -5,7 +5,6 @@ set -e
 # Run a set of tests using internal IMR data sets
 
 export PYTHONPATH=.
-export LSSS=lsss-2.16.0-alpha
 export TESTSET=/data/crimac/2023/T2023001/ACOUSTIC/EK80/EK80_RAWDATA/
 # This is the messor data example (for FM2PC?):
 #    /data/crimac/2021/T2021002/ACOUSTIC/EK80/EK80_RAWDATA/

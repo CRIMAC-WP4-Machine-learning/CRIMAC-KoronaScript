@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BoxRefType3D>
+   <i boxReference="0" boxReferenceName="Local, parallell to ship"/>
+   <i boxReference="1" boxReferenceName="Global, north pi/4"/>
+</BoxRefType3D>

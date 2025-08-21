@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ObservationType>
+   <i observationType="23000" observationTypeName="Scattered Fish Data 3D"/>
+   <i observationType="24000" observationTypeName="School Of Fish Data 3D"/>
+   <i observationType="29000" observationTypeName="ScatterObject School 3D"/>
+   <i observationType="30000" observationTypeName="ScatterObject Pelagic 3D"/>
+</ObservationType>

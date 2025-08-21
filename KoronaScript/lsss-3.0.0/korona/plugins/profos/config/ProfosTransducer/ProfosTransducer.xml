@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ProfosTransducer>
+   <parameters>
+      <parameter name="AlongOffset">0</parameter>
+      <parameter name="AthwartOffset">0</parameter>
+      <parameter name="DepthOffset">0</parameter>
+      <parameter name="BlindZone">45</parameter>
+      <parameter name="BlindSector">25</parameter>
+      <parameter name="SamplingRange">300</parameter>
+      <parameter name="VerticalBlindSector">30</parameter>
+      <parameter name="VerticalMinDepth">0</parameter>
+      <parameter name="VerticalMaxDepth">1000</parameter>
+   </parameters>
+</ProfosTransducer>
