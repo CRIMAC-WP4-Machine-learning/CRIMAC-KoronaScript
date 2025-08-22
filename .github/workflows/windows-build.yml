@@ -2,9 +2,9 @@ name: Python package build and test on Windows
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, windows-auto-build ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, windows-auto-build ]
 
 jobs:
   build-and-test:
