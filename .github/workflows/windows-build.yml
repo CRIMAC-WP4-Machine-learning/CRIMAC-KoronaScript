@@ -22,6 +22,4 @@ jobs:
         pip install -e . # Installs the package in editable mode
         pip install pytest # Installs testing framework
     - name: Run tests
-      run: |
-        set PYTHONPATH=%cd%
-        pytest # Executes tests using pytest
+      run: python -m pytest # Executes tests using pytest
