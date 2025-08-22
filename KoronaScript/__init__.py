@@ -22,13 +22,13 @@ if os.getenv('LSSS') is not None:
     lsss = os.getenv('LSSS')
     print(f'KoronaScript: Using external LSSS from variable $LSSS={lsss}.')
 else:
-    myos = 'linux' if sys.platform == 'linux' else ''  # for windows
+    myos = 'linux' if sys.platform == '-linux' else ''  # for windows
     lsss = str(resources.files('KoronaScript').joinpath('lsss-3.0.0'))
     if not os.path.exists(lsss):
             basedir = os.path.dirname(lsss)
             print(f'{lsss} does not exist, downloading it.')
             # os.system(f'curl https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-{myos}.zip -o "{basedir}/{CURRENT_LSSS}.zip"')
-            resp = requests.get(f'https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-{myos}.zip')
+            resp = requests.get(f'https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}{myos}.zip')
             resp.raise_for_status()
             zip1 = os.path.join(basedir, f'{CURRENT_LSSS}.zip')
             with open(zip1, 'wb') as f:
