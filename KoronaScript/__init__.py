@@ -29,13 +29,14 @@ else:
             print(f'{lsss} does not exist, downloading it.')
             # os.system(f'curl https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-{myos}.zip -o "{basedir}/{CURRENT_LSSS}.zip"')
             resp = requests.get(f'https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-{myos}.zip')
-            with open(f'{basedir}/{CURRENT_LSSS}.zip', 'wb') as f:
+            zip1 = os.path.join(basedir, f'{CURRENT_LSSS}.zip')
+            with open(zip1, 'wb') as f:
                 f.write(resp.content)
             # os.system(f'unzip "{basedir}/{CURRENT_LSSS}.zip" -d "{basedir}"')
-            with ZipFile(f'{basedir}/{CURRENT_LSSS}.zip', 'r') as z:
+            with ZipFile(zip1, 'r') as z:
                 z.extractall(basedir)
             # os.system(f'unzip "{os.path.dirname(lsss)}/{CURRENT_LSSS}/lsss-3.0.0-{myos}.zip" -d "{basedir}"')
-            with ZipFile(f'{os.path.dirname(lsss)}/{CURRENT_LSSS}/lsss-3.0.0-{myos}.zip') as z:
+            with ZipFile(os.path.join(os.path.dirname(lsss), CURRENT_LSSS, f'lsss-3.0.0-{myos}.zip')) as z:
                 z.extractall(basedir)
             os.chmod(f'{lsss}/jre/bin/java', 0o755)
 
