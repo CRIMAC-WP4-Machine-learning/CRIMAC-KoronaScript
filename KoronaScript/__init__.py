@@ -10,25 +10,35 @@ import subprocess
 import tempfile
 import os
 import sys
-
+from zipfile import ZipFile
 import importlib.resources as resources
+import requests
 
 from .KoronaModule import global_spec
 
-CURRENT_LSSS='lsss-3.0.0-20250204-0841'
+CURRENT_LSSS = 'lsss-3.0.0-20250204-0841'
 
 if os.getenv('LSSS') is not None:
     lsss = os.getenv('LSSS')
     print(f'KoronaScript: Using external LSSS from variable $LSSS={lsss}.')
 else:
+    myos = sys.platform
     with resources.files('KoronaScript').joinpath('lsss-3.0.0') as lssspath:
         lsss = str(lssspath)
         if not os.path.exists(lsss):
             basedir = os.path.dirname(lsss)
             print(f'{lsss} does not exist, downloading it.')
-            os.system(f'curl https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-linux.zip -o "{basedir}/{CURRENT_LSSS}.zip"')
-            os.system(f'unzip "{basedir}/{CURRENT_LSSS}.zip" -d "{basedir}"')
-            os.system(f'unzip "{os.path.dirname(lsss)}/{CURRENT_LSSS}/lsss-3.0.0-linux.zip" -d "{basedir}"')
+            # os.system(f'curl https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-{myos}.zip -o "{basedir}/{CURRENT_LSSS}.zip"')
+            resp = requests.get(f'https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-{myos}.zip')
+            with open(f'{basedir}/{CURRENT_LSSS}.zip', 'wb') as f:
+                f.write(resp.content)
+            # os.system(f'unzip "{basedir}/{CURRENT_LSSS}.zip" -d "{basedir}"')
+            with ZipFile(f'{basedir}/{CURRENT_LSSS}.zip', 'r') as z:
+                z.extractall(basedir)
+            # os.system(f'unzip "{os.path.dirname(lsss)}/{CURRENT_LSSS}/lsss-3.0.0-{myos}.zip" -d "{basedir}"')
+            with ZipFile(f'{os.path.dirname(lsss)}/{CURRENT_LSSS}/lsss-3.0.0-{myos}.zip') as z:
+                z.extractall(basedir)
+            os.chmod(f'{lsss}/jre/bin/java', 0o755)
 
 
 class KoronaScript():
