@@ -23,9 +23,8 @@ if os.getenv('LSSS') is not None:
     print(f'KoronaScript: Using external LSSS from variable $LSSS={lsss}.')
 else:
     myos = sys.platform
-    with resources.files('KoronaScript').joinpath('lsss-3.0.0') as lssspath:
-        lsss = str(lssspath)
-        if not os.path.exists(lsss):
+    lsss = str(resources.files('KoronaScript').joinpath('lsss-3.0.0'))
+    if not os.path.exists(lsss):
             basedir = os.path.dirname(lsss)
             print(f'{lsss} does not exist, downloading it.')
             # os.system(f'curl https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-{myos}.zip -o "{basedir}/{CURRENT_LSSS}.zip"')
