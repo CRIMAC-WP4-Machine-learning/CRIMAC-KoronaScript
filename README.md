@@ -2,7 +2,10 @@
 
 ## Prerequisites
 
-KoronaScript now includes the (open source) LSSS and Korona 3.0.0.
+KoronaScript depends on LSSS and Korona version 3.0.0.  The `LSSS`
+environment variable can be set to point to an existing installation,
+otherwise, the LSSS distribution will be automatically downloaded from
+the Marec web pages and installed as part of this package.
 
 # Usage
 
