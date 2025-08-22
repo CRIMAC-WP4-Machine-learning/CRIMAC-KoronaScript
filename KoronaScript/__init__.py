@@ -36,8 +36,8 @@ else:
             try:
                 with ZipFile(zip1, 'r') as z:
                     z.extractall(basedir)
-            except BadZipFile:
-                raise BadZipFile(f'Bad zip: {zip1}')
+            except:
+                raise f'Bad zip: {zip1}'
             # os.system(f'unzip "{os.path.dirname(lsss)}/{CURRENT_LSSS}/lsss-3.0.0-{myos}.zip" -d "{basedir}"')
             with ZipFile(os.path.join(os.path.dirname(lsss), CURRENT_LSSS, f'lsss-3.0.0-{myos}.zip')) as z:
                 z.extractall(basedir)
