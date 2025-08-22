@@ -25,19 +25,17 @@ else:
     myos = sys.platform
     lsss = str(resources.files('KoronaScript').joinpath('lsss-3.0.0'))
     if not os.path.exists(lsss):
-            basedir = os.path.dirname(lsss)
-            print(f'{lsss} does not exist, downloading it.')
-            # os.system(f'curl https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-{myos}.zip -o "{basedir}/{CURRENT_LSSS}.zip"')
-            resp = requests.get(f'https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-{myos}.zip')
-            with open(f'{basedir}/{CURRENT_LSSS}.zip', 'wb') as f:
-                f.write(resp.content)
-            # os.system(f'unzip "{basedir}/{CURRENT_LSSS}.zip" -d "{basedir}"')
-            with ZipFile(f'{basedir}/{CURRENT_LSSS}.zip', 'r') as z:
-                z.extractall(basedir)
-            # os.system(f'unzip "{os.path.dirname(lsss)}/{CURRENT_LSSS}/lsss-3.0.0-{myos}.zip" -d "{basedir}"')
-            with ZipFile(f'{os.path.dirname(lsss)}/{CURRENT_LSSS}/lsss-3.0.0-{myos}.zip') as z:
-                z.extractall(basedir)
-            os.chmod(f'{lsss}/jre/bin/java', 0o755)
+        basedir = os.path.dirname(lsss)
+        print(f'{lsss} does not exist, downloading it.')
+        resp = requests.get(f'https://www.marec.no/downloads/{CURRENT_LSSS}/{CURRENT_LSSS}-{myos}.zip')
+        resp.raise_for_status()
+        with open(f'{basedir}/{CURRENT_LSSS}.zip', 'wb') as f:
+            f.write(resp.content)
+        with ZipFile(f'{basedir}/{CURRENT_LSSS}.zip', 'r') as z:
+            z.extractall(basedir)
+        with ZipFile(f'{os.path.dirname(lsss)}/{CURRENT_LSSS}/lsss-3.0.0-{myos}.zip') as z:
+            z.extractall(basedir)
+        os.chmod(f'{lsss}/jre/bin/java', 0o755)
 
 
 class KoronaScript():
