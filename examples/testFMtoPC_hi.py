@@ -17,5 +17,4 @@ ksi.add(ksm.TsDetection(Active="true",
                         MaxPhaseDevSteps="8",
                         MaxDepth="40"))
 
-ksi.write()
 ksi.run(src=sys.argv[1], dst=sys.argv[2])
