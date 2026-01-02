@@ -4,7 +4,7 @@ import sys
 
 ksi = ks.KoronaScript(TransducerRanges="examples/TransducerRanges.xml")
 
-# Add the pulsecompression module and write to nc
+# Run TS detection
 
 ksi.add(ksm.TsDetection(Active="true",
                         DetectorType="PEAK",

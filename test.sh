@@ -21,9 +21,9 @@ echo "Running: channelRemoval"
 mkdir -p test_cr.out
 python3 examples/channelRemoval.py $TESTSET test_cr.out
 
-echo "Running: FM to PC"
-mkdir -p test_fm2pc.out
-python3 examples/testFMtoPC_hi.py $TESTSET test_fm2pc.out
+echo "Running: tsDetection"
+mkdir -p test_tsdet.out
+python3 examples/tsDetection.py $TESTSET test_tsdet.out
 
 echo "Running: pulseCompression"
 mkdir -p test_pc.out
