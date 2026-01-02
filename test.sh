@@ -29,5 +29,9 @@ echo "Running: pulseCompression"
 mkdir -p test_pc.out
 python3 examples/pulseCompression.py $TESTSET test_pc.out
 
+echo "Running: tracking"
+mkdir -p test_track.out
+python3 examples/tracking.py $TESTSET test_track.out
+
 # Too complicated to set up
 # python3 examples/processFMtestdata.py

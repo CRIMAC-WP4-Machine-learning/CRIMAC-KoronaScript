@@ -9,7 +9,7 @@ the results as an netcdf.
 
 ksi = ks.KoronaScript()
 ksi.add(ksm.NetcdfWriter(Active="true",
-                         DirName=sys.argv[2],  # the .nc is written here
+                         DirName="",  # the .nc is written here (relative to argv[2])
                          MainFrequency="38",
                          WriterType="CHANNEL_GROUPS",
                          GriddedOutputType="PULSE_COMPRESSION",
