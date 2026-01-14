@@ -11,9 +11,14 @@ authors:
   - name: Ketil Malde
     orcid: 0000-0001-7381-1849
     affiliation: 1
+  - name: Inge Eliassen
+    affiliation: 2
+  - name: Rolf Korneliussen
+    affiliation: 1
 affiliations:
  - name: Institute of Marine Research, Bergen, Norway
-   index: 1
+   index: 2
+ - name: NORCE, Bergen, Norway
 date: 2026
 bibliography: references.bib
 ---
@@ -34,7 +39,7 @@ Acoustic instruments have become essential tools for marine science, and a varie
 
 In parallel with the deveopment and new and more advanced instruments, there has risen a need for new algorithms and tools to effectively process the often large amounts of data produced.
 
-Popular packages include 
+Popular packages include (...)
 
 # LSSS
 
@@ -42,12 +47,12 @@ One popular platform for analyzing acoustics data is the Large Scale Survey Syst
 
  (todo: who uses it - examples)
 
+# The KORONA processing library
+
 LSSS integrates with a data processing library called KORONA [@korona].  This library is comprised of a number individual modules, offering access to a wide range of functionality, like noise removal, broadband pulse compression, automated target classification, format conversions, and so on.
 In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating them. \ref{fig:korona}
 
 (Figure)
-
-# The KORONA processing library
 
 List of modules, documentation, tec
 
