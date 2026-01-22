@@ -12,6 +12,7 @@ authors:
     orcid: 0000-0001-7381-1849
     affiliation: 1
   - name: Inge Eliassen
+    orcid: 0009-0005-0400-3342
     affiliation: 2
   - name: Rolf Korneliussen
     affiliation: 1
