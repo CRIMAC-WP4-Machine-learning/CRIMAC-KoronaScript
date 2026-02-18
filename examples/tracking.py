@@ -63,4 +63,4 @@ ks.add(ksm.Tracking(Active="true",
                     MinTrackLength="10",
                     MinSampleToLengthFraction="1"))
 
-ks.run(src=sys.argv[1], dst=sys.argv[2])
+ks.run(src=sys.argv[1], dst=sys.argv[2], debug=False)
