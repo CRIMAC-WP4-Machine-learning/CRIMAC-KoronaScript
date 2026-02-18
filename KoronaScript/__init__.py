@@ -101,7 +101,10 @@ class KoronaScript():
         cmd = [java] + javaopts + ['no.imr.korona.main.KoronaCliMain', 'batch', '--cfs', cfsname, '--source', src, '--destination', dst]
         if debug: print('Running:\n  ', cmd)
         res = subprocess.run(cmd, capture_output=True, text=True)
-        if debug: print(res.stdout)
+        if debug:
+            print(res.stdout)
+            print()
+            print(res.stderr)
         if res.returncode != 0:
             err_str = f'Korona subprocess returned an error code: {res.returncode}\n' + '----------------------------------------\n' + res.stderr
             raise Exception(err_str)
