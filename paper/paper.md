@@ -32,7 +32,7 @@ bibliography: references.bib
 
 # Summary
 
-
+KoronaScript is a Python library that provides a programmatic interface to KORONA, a wide collection of algorithms and processing modules for acoustic data processing.  KORONA is integrated with the Large Scale Survey System (LSSS), a popular package for scientific analysis of data from acoustic equiment, including echo sounders, sonars, and hydrophones.
 
 # Statement of need
 
@@ -50,17 +50,20 @@ Furthermore,  many important algorithms and processing modules have many tunable
 
 Finally, by embedding the analysis in a program, it can be shared, copied, and versioned (e.g.\ in GitHub), which supports reproducibility and verifiability, and is particularly useful for scientific work. The process can also be  intermixed with other processing operations, like AI-based classification models [e.g., @brautaset2020acoustic], or functionality offered by other analysis toolkits like pyEchoView [@wall2018pyecholab] or EchoPype [@lee2024interoperable].
 
-_KoronaScript_ is a Python application programming interface (API) that interfaces with KORONA, the processing components of the popular acoustic analysis package, LSSS.  This gives the user full programmatic access to all the processing modules and algorithms offered by KORONA through a convenient Python interface.
+_KoronaScript_ is a Python application programming interface (API) that interfaces with KORONA, the processing components of the popular acoustic analysis package, LSSS.  This gives the user full programmatic access to all the processing modules and 
+algorithms offered by KORONA through a convenient Python interface.
 
-## LSSS
+# State of the field
+
+# Software design
+
+## LSSS and KORONA
 
 The Large Scale Survey System (LSSS) [@korneliussen2006large] has been a popular platform for analyzing acoustics data for two decades.
 
  (todo: who uses it - examples)
 
  (figure)
-
-## The KORONA processing library
 
 LSSS integrates with a data processing library called KORONA [@korona].  This library is comprised of a number individual modules, offering access to a wide range of functionality and algorithms, including noise removal, broadband pulse compression, automated target classification, format conversions.
 In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating them. \ref{fig:korona}
@@ -79,13 +82,21 @@ Generated XML and JSON specifications
 
 Calling out to the Java subsystem for execution.
 
-# Availability
+## Availability
 
 PYPI
 GitHub
 LSSS and KORONA
 
-# Acknowledgments
+# Research impact statement
 
+(Overview/list of papers using korona and LSSS)
+
+
+# AI usage disclosure
+
+A large language model was used to review drafts and offer suggestions for improvement. All suggestions were manually reviewed.  AI has not been used for direct generation of code or text.
+
+# Acknowledgments
 
 # References
