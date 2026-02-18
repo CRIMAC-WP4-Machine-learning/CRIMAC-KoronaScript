@@ -38,7 +38,7 @@ bibliography: references.bib
 
 Acoustic instruments have become essential tools for marine science, and a variety of echo sounders and sonars are routinely used to explore the world below the ocean surface.  Multi-beam echo sounders map the sea floor in high detail, split beam and multi frequency echo sounders measure the abundance of fish for stock assessments, side-scan and synthtetic aperture sonars can resolve objects in minute detail, ACDP measures deep sea currents.
 
-In parallel with the deveopment and new and more advanced instruments, there has risen a need for new algorithms and tools to effectively process the often large amounts of data produced.  Software analytics are important for tasks like noise detection and removal, data compression, bottom detection, species identification and other acoustic target classification, and integrating with related data.  Several popular software packages exist, often combining a variety of analytics with an easy to use graphical interface, including LSSS [@korneliussen2006large] and EchoView (Echoview Software Pty Ltd., 2025).
+In parallel with the development and new and more advanced instruments, there has risen a need for new algorithms and tools to effectively process the often large amounts of data produced.  Software analytics are important for tasks like noise detection and removal, data compression, bottom detection, species identification and other acoustic target classification, and integrating with related data.  Several popular software packages exist, often combining a variety of analytics with an easy to use graphical interface, including LSSS [@korneliussen2006large] and EchoView (Echoview Software Pty Ltd., 2025).
 
 (more?)
 
@@ -48,7 +48,7 @@ While interactive scrutiny by expert users remains an important method to interp
 
 Furthermore,  many important algorithms and processing modules have many tunable parameters, and a scriptable API allows these parameters to be optimized by an automated (or semi-automated) process using grid search or other schemes.  The other user can perform sensitivity analysis to evaluate the importance of each parameter, and can compare the results from different configurations to find the process that best fits a particular challenge.
 
-Finally, by embedding the analysis in a program, it can be be shared, copied, and versioned (e.g.\ in GitHub), and intermixed with other processing operations, like AI-based classification systems [e.g., @brautaset2020acoustic], or functionality offered by other analysis toolkits like pyEchoView [@wall2018pyecholab] or EchoPype [@lee2024interoperable]. 
+Finally, by embedding the analysis in a program, it can be shared, copied, and versioned (e.g.\ in GitHub), which supports reproducibility and verifiability, and is particularly useful for scientific work. The process can also be  intermixed with other processing operations, like AI-based classification models [e.g., @brautaset2020acoustic], or functionality offered by other analysis toolkits like pyEchoView [@wall2018pyecholab] or EchoPype [@lee2024interoperable].
 
 _KoronaScript_ is a Python application programming interface (API) that interfaces with KORONA, the processing components of the popular acoustic analysis package, LSSS.  This gives the user full programmatic access to all the processing modules and algorithms offered by KORONA through a convenient Python interface.
 
@@ -72,6 +72,12 @@ List of modules, documentation, etc
 ## The KoronaScript programmatic interface
 
 (How it is implemented)
+
+Code generation from self-documented KORONA modules
+
+Generated XML and JSON specifications
+
+Calling out to the Java subsystem for execution.
 
 # Availability
 
