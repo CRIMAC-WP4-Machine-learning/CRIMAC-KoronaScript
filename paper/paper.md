@@ -38,11 +38,9 @@ KoronaScript is a Python library that provides a programmatic interface to KORON
 
 Acoustic instruments have become essential tools for marine science, and a variety of echo sounders and sonars are routinely used to explore the world below the ocean surface.  Multi-beam echo sounders map the sea floor in high detail, split beam and multi frequency echo sounders measure the abundance of fish for stock assessments, side-scan and synthtetic aperture sonars can resolve objects in minute detail, ACDP measures deep sea currents.
 
-In parallel with the development and new and more advanced instruments, there has risen a need for new algorithms and tools to effectively process the often large amounts of data produced.  Software analytics are important for tasks like noise detection and removal, data compression, bottom detection, species identification and other acoustic target classification, and integrating with related data.  Several popular software packages exist, often combining a variety of analytics with an easy to use graphical interface, including LSSS [@korneliussen2006large] and EchoView (Echoview Software Pty Ltd., 2025).
+In parallel with the development and new and more advanced instruments, there has risen a need for new algorithms and tools to effectively process the often large amounts of data produced.  Software analytics are important for tasks like noise detection and removal, data compression, bottom detection, species identification and other acoustic target classification, and integrating with related data.  Several popular software packages exist, often combining a variety of analytics with an easy to use graphical interface, including LSSS [@korneliussen2006large], HERMES and Movies3d [@trenkel2009overview], and EchoView (Echoview Software Pty Ltd., 2025) (or [@EchoviewSoftware]?).
 
-(more?)
-
-<!-- PyEchoLab [@wall2018pyecholab], and EchoPype [@lee2024interoperable]. -->
+<!-- @Rolf: more? -->
 
 While interactive scrutiny by expert users remains an important method to interpret acoustic data, it is often convenient or even necessary to automate the processing.  As data collection volumes increase, labor costs and expert availabilty becomes major obstacles to effective data use.  Having a programmatic interface that can be scripted is quickly becoming a necessity.
 
