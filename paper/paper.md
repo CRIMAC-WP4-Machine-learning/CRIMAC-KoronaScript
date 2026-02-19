@@ -74,13 +74,10 @@ List of modules, documentation, etc
 
 ## The KoronaScript programmatic interface
 
-(How it is implemented)
+KoronaScript is implemented as a set of Python classes that each encapsulates a KORONA procssing module.  These classes leverage two core features offered by KORONA.
+First, KORONA can generate a description of its modules and their parameters in the form of a JSON file.  KoronaScript parses this, and generates the corresponding Python classes.  This ensures that the KoronaScript will automatically incorporate new features provided by new releases of KORONA.
 
-Code generation from self-documented KORONA modules
-
-Generated XML and JSON specifications
-
-Calling out to the Java subsystem for execution.
+Second, the KORONA user interface writes configured pipelines to XML files, which are then processed by the corresponding processing modules.  KoronaScript leverages this interface by having the classes generate the same XML ouptput as the KORONA GUI would produce.  A `KoronaScript` class lets the user organize class instances in a sequence, and calling the KORONA processing infrastructure on the generated XML specification.
 
 ## Availability
 
