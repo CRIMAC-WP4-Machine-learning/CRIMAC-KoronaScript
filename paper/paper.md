@@ -60,12 +60,12 @@ To support postprocessing of data and scientific information extraction, some pr
 EchoeViewR [@harrison2015r], which provides an R interface to the EchoView system, and Matecho [@perrot2018matecho], a tool for data analysis implemented in Matlab, and linked to Movies3d [@trenkel2009overview].
 
 With the advent of uncrewed platforms for data collection [@examples of this], the need to build automated workflows automatically has increased.
-Increased data complexity and volumes, e.g. from broadband echo sounders, exacerbates this [@malde2020machine].
+Increased data complexity and volumes, e.g. from broadband echo sounders, exacerbates this [@guidi2020big;@malde2020machine].
 To automate data processing, there exist packages like PyEchoLab [@wall2018pyecholab] and EchoPype [@lee2024interoperable] which offer algorithms and tools with a programmatic interface.
 
 <!-- However... -->
 
-Simultaneously, the advent of deep learning in marine science [@malde2020machine,@beyan2020setting,rubbens2023machine] has increased the importance of integrating traditional or existing methods with new, data driven approaches.
+Simultaneously, the advent of deep learning in marine science [@malde2020machine;@beyan2020setting;@rubbens2023machine] has increased the importance of integrating traditional or existing methods with new, data driven approaches.
 Although support for machine learning can be found in many programming languages (including Matlab and R), Python is overwhelmingly the most popular choice.  We foresee that the field will increasingly move towards automation that integrates traditional and new methods using Python as the primary glue.
 
 # Software design
