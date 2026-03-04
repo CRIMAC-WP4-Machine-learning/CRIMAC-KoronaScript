@@ -94,14 +94,14 @@ Second, the KORONA user interface writes configured pipelines to XML files, whic
 
 ## Availability and installation
 
-PYPI
-GitHub
-LSSS and KORONA
+KoronaScript is available from the PYPI archive, and can be installed using `pip install koronascript`, or via other package mangemente tools for Python (e.g. Anaconda or `uv`).  The source code is available from the GitHub repository at https://github.com/CRIMAC-WP4-Machine-learning/CRIMAC-KoronaScript .
+
+KoronaScript will automatically download and install Korona and LSSS, so no explicit action is required by the user.  
+The latest version of the software can be downloaded separately from https://marec.no/downloads.htm or from the GitHub repository at https://github.com/marec-open-source/lsss . 
 
 # Research impact statement
 
-(Overview/list of papers using korona and LSSS)
-
+(@Rolf? Overview/list of papers using korona and LSSS, current use of scripting)
 
 # AI usage disclosure
 
