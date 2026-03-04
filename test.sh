@@ -4,9 +4,10 @@ set -e
 
 # Run a set of tests using internal IMR data sets
 
-export PYTHONPATH=.
+# It is better to 'pip install .' in a virtualenv or otherwise make the pacakge available
+# export PYTHONPATH=.
 
-export TESTSET=~/src/data/testset
+export TESTSET=~/kstest
 # This is the messor data example (for FM2PC?):
 #    /data/crimac/2021/T2021002/ACOUSTIC/EK80/EK80_RAWDATA/
 # Not sure what this is
