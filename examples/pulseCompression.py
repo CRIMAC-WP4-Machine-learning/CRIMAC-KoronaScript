@@ -18,4 +18,5 @@ ksi.add(ksm.NetcdfWriter(Active="true",
                          DeltaFrequency="1",
                          ChannelGroupOutputType="PULSE_COMPRESSION"))
 
-ksi.run(src=sys.argv[1], dst=sys.argv[2])
+if __name__ == '__main__':
+    ksi.run(src=sys.argv[1], dst=sys.argv[2])
