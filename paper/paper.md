@@ -59,8 +59,7 @@ This approach has been a cornerstone for important long running survey series pe
 To support postprocessing of data and scientific information extraction, some programmatic packages exist, including
 EchoeViewR [@harrison2015r], which provides an R interface to the EchoView system, and Matecho [@perrot2018matecho], a tool for data analysis implemented in Matlab, and linked to Movies3d [@trenkel2009overview].
 
-With the advent of uncrewed platforms for data collection [@examples of this], the need to build automated workflows automatically has increased.
-Increased data complexity and volumes, e.g. from broadband echo sounders, exacerbates this [@guidi2020big;@malde2020machine].
+With the advent of uncrewed platforms for data collection [@handegard2024usvs], the need to build automated workflows automatically has increased. Increased data complexity and volumes, e.g. from broadband echo sounders, exacerbates this [@guidi2020big;@malde2020machine].
 To automate data processing, there exist packages like PyEchoLab [@wall2018pyecholab] and EchoPype [@lee2024interoperable] which offer algorithms and tools with a programmatic interface.
 
 <!-- However... -->
@@ -72,18 +71,78 @@ Although support for machine learning can be found in many programming languages
 
 ## LSSS and KORONA
 
-The Large Scale Survey System (LSSS) [@korneliussen2006large] has been a popular platform for analyzing acoustics data for two decades.
+The Large Scale Survey System (LSSS) [@korneliussen2006large] is an efficient open source tool for analyzing data from acosutic trawl survceys. The system is designed to efficiently support the standard workflow for acosutic trawl surveys, where the data is manually curated during the survey. The system contains support for reading a wide range of data formats, a graphical interface to manually assign acoustic backscatter to acosutic categories as well as an echo integration step for estimating the nautical scattering coefficient per acoustic category for further use in survey estimation programs like StoX [@johnsen_stox_2019]. The software is the de facto standard for all acoustic traslw surveys conducted by the Insitute of Marine reseach. Other useres are the MRI , Iceland (ask rolf for more)
 
- (todo: who uses it - examples)
+(figure)
 
- (figure)
-
-LSSS integrates with a data processing library called KORONA [@korona].  This library is comprised of a number individual modules, offering access to a wide range of functionality and algorithms, including noise removal, broadband pulse compression, automated target classification, format conversions.
-In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating them. \ref{fig:korona}
+LSSS integrates with a pre processing library called KORONA [@korona]. KORONA is used to process the data before using the data in LSSS.
+  The library is comprised of a number individual modules, offering access to a wide range of functionality and algorithms, including noise removal, broadband pulse compression, tracking, automated target classification, format conversions, etc.
+In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating them. \ref{fig:korona}. The standard ouptu from Korona is korona specific raw data files, but the library also offer importing and exportingNetCdf formats.
 
 (Figure)
 
-List of modules, documentation, etc
+| Module                     |
+| -------------------------- |
+| AngleDeletion              |
+| BroadbandNotchFilter       |
+| BroadbandSplitter          |
+| BubblSpikeFilter           |
+| Categorization             |
+| CdsViewer                  |
+| ChannelDataRemoval         |
+| ChannelRemoval             |
+| Combination                |
+| Comment                    |
+| ComplexToReal              |
+| DataReduction              |
+| DepthDependentResampling   |
+| Depth                      |
+| Dilate                     |
+| Downsampling               |
+| ES60Correction             |
+| EchoLineCompression        |
+| EdgeDetection              |
+| EmptyPingRemoval           |
+| ErodeLowValues             |
+| Erode                      |
+| Expression                 |
+| FillMissingData            |
+| Filter3X3                  |
+| FiskViewDisplay            |
+| GroupEnd                   |
+| HorizontalOffsetCorrection |
+| Isolation                  |
+| Median                     |
+| NetcdfWriter               |
+| NoiseAcceptance            |
+| NoiseMedianQuantification  |
+| NoiseQuantification        |
+| NoiseRemover               |
+| NoiseVisualization         |
+| PingCollapsing             |
+| PingThinning               |
+| PlanktonInversion          |
+| Plugin                     |
+| PulseCompressionFilter     |
+| RemoveBottom               |
+| Rescale                    |
+| SchoolCategorization       |
+| SchoolDetection            |
+| Smoother                   |
+| SpikeFilter                |
+| SpotNoise                  |
+| TemporaryComputationsBegin |
+| TemporaryComputationsEnd   |
+| ThresholdAllChannels       |
+| Threshold                  |
+| TimeInterval               |
+| Towfish                    |
+| TrackFilter                |
+| Tracking                   |
+| TsDetection                |
+| VerticalOffsetCorrection   |
+| Writer                     |
+
 
 ## The KoronaScript programmatic interface
 
@@ -101,7 +160,18 @@ The latest version of the software can be downloaded separately from https://mar
 
 # Research impact statement
 
+
 (@Rolf? Overview/list of papers using korona and LSSS, current use of scripting)
+
+## Machine learning
+KORONA has been use to convert IMR's historical data to standardized gridded using the `NetcdfWriterModule`. This is used to grid the data onto the grid for the main frequency. Since data format changes over a time series, this ensures consistency throughout the time series, e.g. the resoution of the EK80 data are different than for the EK60 for the same settings. 
+
+## Acoustic target classification
+The acsoutic target classification module in KORONA has been used to detect mackerel from historical data. KORONA was used to convert EK500 data to EK60 data, noise filtering and acoustic target classification.
+
+The KoronaScript module makes the KORONA processing steps available for python users by wrapping a python package around KORONA.
+
+
 
 # AI usage disclosure
 
