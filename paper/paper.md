@@ -92,7 +92,7 @@ First, KORONA can generate a description of its modules and their parameters in 
 
 Second, the KORONA user interface writes configured pipelines to XML files, which are then processed by the corresponding processing modules.  KoronaScript leverages this interface by having the classes generate the same XML ouptput as the KORONA GUI would produce.  A `KoronaScript` class lets the user organize class instances in a sequence, and calling the KORONA processing infrastructure on the generated XML specification.
 
-## Availability
+## Availability and installation
 
 PYPI
 GitHub
