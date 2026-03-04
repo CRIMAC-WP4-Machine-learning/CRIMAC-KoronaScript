@@ -6,7 +6,7 @@ set -e
 
 export PYTHONPATH=.
 
-export TESTSET=~/src/data/testset
+export TESTSET=testdata
 # This is the messor data example (for FM2PC?):
 #    /data/crimac/2021/T2021002/ACOUSTIC/EK80/EK80_RAWDATA/
 # Not sure what this is
