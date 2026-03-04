@@ -4,7 +4,8 @@ set -e
 
 # Run a set of tests using internal IMR data sets
 
-export PYTHONPATH=.
+# It is better to 'pip install .' in a virtualenv or otherwise make the pacakge available
+# export PYTHONPATH=.
 
 export TESTSET=testdata
 # This is the messor data example (for FM2PC?):
