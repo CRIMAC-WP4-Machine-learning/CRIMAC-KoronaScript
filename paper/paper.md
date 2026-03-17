@@ -160,7 +160,6 @@ The latest version of the software can be downloaded separately from https://mar
 
 # Research impact statement
 
-
 (@Rolf? Overview/list of papers using korona and LSSS, current use of scripting)
 
 ## Machine learning
