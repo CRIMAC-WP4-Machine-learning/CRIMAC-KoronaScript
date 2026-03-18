@@ -15,6 +15,10 @@ authors:
     orcid: 0009-0005-0400-3342
     affiliation: 2
   - name: Rolf Korneliussen
+    orcid: 0000-0001-9304-9943
+    affiliation: 1
+  - name: Nils Olav Handegard
+    orcid: 0000-0002-9708-9042
     affiliation: 1
 affiliations:
  - name: Institute of Marine Research, Bergen, Norway
