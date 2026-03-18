@@ -73,12 +73,9 @@ Although support for machine learning can be found in many programming languages
 
 The Large Scale Survey System (LSSS) [@korneliussen2006large] is an efficient open source tool for analyzing data from acosutic trawl survceys. The system is designed to efficiently support the standard workflow for acosutic trawl surveys, where the data is manually curated during the survey. The system contains support for reading a wide range of data formats, a graphical interface to manually assign acoustic backscatter to acosutic categories as well as an echo integration step for estimating the nautical scattering coefficient per acoustic category for further use in survey estimation programs like StoX [@johnsen_stox_2019]. The software is the de facto standard for all acoustic traslw surveys conducted by the Insitute of Marine reseach. Other useres are the MRI , Iceland (ask rolf for more)
 
-(figure)
-
-LSSS integrates with a pre processing library called KORONA [@korona]. KORONA is used to process the data before using the data in LSSS.
-  The library is comprised of a number individual modules, offering access to a wide range of functionality and algorithms, including noise removal, broadband pulse compression, tracking, automated target classification, format conversions, etc.
-In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating them. \ref{fig:korona}. The standard ouptu from Korona is korona specific raw data files, but the library also offer importing and exportingNetCdf formats.
-
+LSSS integrates with a pre processing library called KORONA. KORONA is used to process the data before using the data in LSSS.
+The library is comprised of a number individual modules (see Table \ref{tbl:ksmod} for the full list), offering access to a wide range of functionality and algorithms, including noise removal, broadband pulse compression, tracking, automated target classification, format conversions, etc.
+In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating them. The standard ouput from Korona is korona specific raw data files, but the library also offer importing from and and exporting to NetCdf.
 
 | List of modules          |                         |                              |
 |--------------------------|-------------------------|------------------------------|
