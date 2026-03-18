@@ -79,70 +79,30 @@ LSSS integrates with a pre processing library called KORONA [@korona]. KORONA is
   The library is comprised of a number individual modules, offering access to a wide range of functionality and algorithms, including noise removal, broadband pulse compression, tracking, automated target classification, format conversions, etc.
 In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating them. \ref{fig:korona}. The standard ouptu from Korona is korona specific raw data files, but the library also offer importing and exportingNetCdf formats.
 
-(Figure)
 
-| Module                     |
-| -------------------------- |
-| AngleDeletion              |
-| BroadbandNotchFilter       |
-| BroadbandSplitter          |
-| BubblSpikeFilter           |
-| Categorization             |
-| CdsViewer                  |
-| ChannelDataRemoval         |
-| ChannelRemoval             |
-| Combination                |
-| Comment                    |
-| ComplexToReal              |
-| DataReduction              |
-| DepthDependentResampling   |
-| Depth                      |
-| Dilate                     |
-| Downsampling               |
-| ES60Correction             |
-| EchoLineCompression        |
-| EdgeDetection              |
-| EmptyPingRemoval           |
-| ErodeLowValues             |
-| Erode                      |
-| Expression                 |
-| FillMissingData            |
-| Filter3X3                  |
-| FiskViewDisplay            |
-| GroupEnd                   |
-| HorizontalOffsetCorrection |
-| Isolation                  |
-| Median                     |
-| NetcdfWriter               |
-| NoiseAcceptance            |
-| NoiseMedianQuantification  |
-| NoiseQuantification        |
-| NoiseRemover               |
-| NoiseVisualization         |
-| PingCollapsing             |
-| PingThinning               |
-| PlanktonInversion          |
-| Plugin                     |
-| PulseCompressionFilter     |
-| RemoveBottom               |
-| Rescale                    |
-| SchoolCategorization       |
-| SchoolDetection            |
-| Smoother                   |
-| SpikeFilter                |
-| SpotNoise                  |
-| TemporaryComputationsBegin |
-| TemporaryComputationsEnd   |
-| ThresholdAllChannels       |
-| Threshold                  |
-| TimeInterval               |
-| Towfish                    |
-| TrackFilter                |
-| Tracking                   |
-| TsDetection                |
-| VerticalOffsetCorrection   |
-| Writer                     |
-
+| List of modules          |                         |                              |
+|--------------------------|-------------------------|------------------------------|
+| AngleDeletion            | ErodeLowValues          | PulseCompressionFilter       |
+| BroadbandNotchFilter     | Erode                   | RemoveBottom                 |
+| BroadbandSplitter        | Expression              | Rescale                      |
+| BubblSpikeFilter         | FillMissingData         | SchoolCategorization         |
+| Categorization           | Filter3X3               | SchoolDetection              |
+| CdsViewer                | FiskViewDisplay         | Smoother                     |
+| ChannelDataRemoval       | GroupEnd                | SpikeFilter                  |
+| ChannelRemoval           | HorizontalOffsetCorrect | SpotNoise                    |
+| Combination              | Isolation               | TemporaryComputationsBegin   |
+| Comment                  | Median                  | TemporaryComputationsEnd     |
+| ComplexToReal            | NetcdfWriter            | ThresholdAllChannels         |
+| DataReduction            | NoiseAcceptance         | Threshold                    |
+| DepthDependentResampling | NoiseMedianQuantificati | TimeInterval                 |
+| Depth                    | NoiseQuantification     | Towfish                      |
+| Dilate                   | NoiseRemover            | TrackFilter                  |
+| Downsampling             | NoiseVisualization      | Tracking                     |
+| ES60Correction           | PingCollapsing          | TsDetection                  |
+| EchoLineCompression      | PingThinning            | VerticalOffsetCorrection     |
+| EdgeDetection            | PlanktonInversion       | Writer                       |
+| EmptyPingRemoval         | Plugin                  |                              |
+: The set of modules offered in the current version of KORONA, and thus available for use in Python programs with KoronaScript.\label{tbl:ksmod}
 
 ## The KoronaScript programmatic interface
 
