@@ -112,22 +112,19 @@ Second, the KORONA user interface writes configured pipelines to XML files, whic
 
 KoronaScript is available from the PYPI archive, and can be installed using `pip install koronascript`, or via other package mangemente tools for Python (e.g. Anaconda or `uv`).  The source code is available from the GitHub repository at https://github.com/CRIMAC-WP4-Machine-learning/CRIMAC-KoronaScript .
 
-KoronaScript will automatically download and install Korona and LSSS, so no explicit action is required by the user.  
+KoronaScript will automatically download and install Korona and LSSS, so no explicit action is required by the user.
 The latest version of the software can be downloaded separately from https://marec.no/downloads.htm or from the GitHub repository at https://github.com/marec-open-source/lsss . 
 
 # Research impact statement
 
-(@Rolf? Overview/list of papers using korona and LSSS, current use of scripting)
+KORONA and LSSS have grown in popularity over time, and before it was released as Open Source been licensed for use by 22 institutes and other organizations[^1]. 
+At the Instiute of Marine Research, LSSS is used to process acoustics data from more than sixty surveys per year, 
+and KORONA functionality is instrumental for acoustic target classification, noise filtering, data regridding, format conversion.
 
-## Machine learning
-KORONA has been use to convert IMR's historical data to standardized gridded using the `NetcdfWriterModule`. This is used to grid the data onto the grid for the main frequency. Since data format changes over a time series, this ensures consistency throughout the time series, e.g. the resoution of the EK80 data are different than for the EK60 for the same settings. 
+[^1]: https://www.norceresearch.no/en/news/our-acoustic-analysis-system-for-fish-is-becoming-open-source
 
-## Acoustic target classification
-The acsoutic target classification module in KORONA has been used to detect mackerel from historical data. KORONA was used to convert EK500 data to EK60 data, noise filtering and acoustic target classification.
-
-The KoronaScript module makes the KORONA processing steps available for python users by wrapping a python package around KORONA.
-
-
+KoronaScript makes the analyses easily available programmatically, and enabling systematic exploration of methods and parameters and facilitating deployment in new settings including on UAVs and in the cloud.
+At IMR, KoronaScript is rapidly becoming an indispensable tool for automating processing pipelines, and restructuring and ingestion of historical data for developing new machine learning methods.
 
 # AI usage disclosure
 
