@@ -1,5 +1,5 @@
 ---
-title: 'KORONA and KoronaScript: a toolbox for acoustic data processing'
+title: 'KORONA and KoronaScript: a programmable toolbox for acoustic data processing'
 tags:
   - Python
   - Java
@@ -36,21 +36,21 @@ bibliography: references.bib
 
 # Summary
 
-KoronaScript is a Python library that provides a programmatic interface to KORONA, a wide collection of algorithms and processing modules for acoustic data processing.  KORONA is integrated with the Large Scale Survey System (LSSS), a popular package for scientific analysis of data from acoustic equiment, including echo sounders, sonars, and hydrophones.
+KoronaScript is a Python library that provides a programmatic interface to KORONA, a wide collection of algorithms and processing modules for acoustic data processing.  KORONA is integrated with the Large Scale Survey System (LSSS), a popular package for scientific analysis of data from acoustic equipment, including echo sounders, sonars, and hydrophones.
 
 # Statement of need
 
-Acoustic instruments have become essential tools for marine science, and a variety of echo sounders and sonars are routinely used to explore the world below the ocean surface.  Multi-beam echo sounders map the sea floor in high detail, split beam and multi frequency echo sounders measure the abundance of fish for stock assessments, side-scan and synthtetic aperture sonars can resolve objects in minute detail, ACDP measures deep sea currents.
+Acoustic instruments have become essential tools for marine science, and a variety of echo sounders and sonars are routinely used to explore the world below the ocean surface.  Multi-beam echo sounders map the sea floor in high detail, split beam and multi frequency echo sounders measure the abundance of fish for stock assessments, side-scan and synthetic aperture sonars can resolve objects in minute detail, ACDP measures deep sea currents.
 
-In parallel with the development and new and more advanced instruments, there has risen a need for new algorithms and tools to effectively process the often large amounts of data produced.  Software analytics are important for tasks like noise detection and removal, data compression, bottom detection, species identification and other acoustic target classification, and integrating with related data.  Several popular software packages exist, often combining a variety of analytics with an easy to use graphical interface, including LSSS [@korneliussen2006large], HERMES and Movies3d [@trenkel2009overview], and EchoView (Echoview Software Pty Ltd., 2025) (or [@EchoviewSoftware]?).
+In parallel with the development and new and more advanced instruments, there has risen a need for new algorithms and tools to effectively process the often large amounts of data produced.  Software analytics are important for tasks like noise detection and removal, data compression, bottom detection, species identification and other acoustic target classification, and integrating with related data.  Several popular software packages exist, often combining a variety of analytics with an easy to use graphical interface, including LSSS [@korneliussen2006large], HERMES and Movies3d [@trenkel2009overview], and EchoView [@EchoviewSoftware].
 
 <!-- @Rolf: more? -->
 
-While interactive scrutiny by expert users remains an important method to interpret acoustic data, it is often convenient or even necessary to automate the processing.  As data collection volumes increase, labor costs and expert availabilty becomes major obstacles to effective data use.  Having a programmatic interface that can be scripted is quickly becoming a necessity.
+While interactive scrutiny by expert users remains an important method to interpret acoustic data, it is often convenient or even necessary to automate the processing.  As data collection volumes increase, labor costs and expert availability becomes major obstacles to effective data use.  Having a programmatic interface that can be scripted is quickly becoming a necessity.
 
 Furthermore,  many important algorithms and processing modules have many tunable parameters, and a scriptable API allows these parameters to be optimized by an automated (or semi-automated) process using grid search or other schemes.  The other user can perform sensitivity analysis to evaluate the importance of each parameter, and can compare the results from different configurations to find the process that best fits a particular challenge.
 
-Finally, by embedding the analysis in a program, it can be shared, copied, and versioned (e.g.\ in GitHub), which supports reproducibility and verifiability, and is particularly useful for scientific work. The process can also be  intermixed with other processing operations, like AI-based classification models [e.g., @brautaset2020acoustic], or functionality offered by other analysis toolkits like pyEchoView [@wall2018pyecholab] or EchoPype [@lee2024interoperable].
+Finally, by embedding the analysis in a program, it can be shared, copied, and versioned (e.g.\ in GitHub), which supports reproducibility and verifiability, and is particularly useful for scientific work. The process can also be  intermixed with other processing operations, like AI-based classification models [e.g., @brautaset2020acoustic], or functionality offered by other analysis toolkits like PyEchoView [@wall2018pyecholab] or EchoPype [@lee2024interoperable].
 
 _KoronaScript_ is a Python application programming interface (API) that interfaces with KORONA, the processing components of the popular acoustic analysis package, LSSS.  This gives the user full programmatic access to all the processing modules and 
 algorithms offered by KORONA through a convenient Python interface.
@@ -58,9 +58,9 @@ algorithms offered by KORONA through a convenient Python interface.
 # State of the field
 
 Traditionally, interpreting marine acoustic data for scientific or resource management purposes have been performed by manual scrutiny by experts using interactive tools. <!-- [@korneliussen2006large, @trenkel2009overview] -->
-This approach has been a cornerstone for important long running survey series performed by research insitutes, including the Institute of Marine Research in Norway using LSSS, IFREMER in France using Movies3d, and NOAAA in the US using EchoView.  <!-- @Rolf -->
+This approach has been a cornerstone for important long running survey series performed by research institutes, including the Institute of Marine Research in Norway using LSSS, IFREMER in France using Movies3d, and NOAA in the US using EchoView.  <!-- @Rolf -->
 
-To support postprocessing of data and scientific information extraction, some programmatic packages exist, including
+To support post-processing of data and scientific information extraction, some programmatic packages exist, including
 EchoeViewR [@harrison2015r], which provides an R interface to the EchoView system, and Matecho [@perrot2018matecho], a tool for data analysis implemented in Matlab, and linked to Movies3d [@trenkel2009overview].
 
 With the advent of uncrewed platforms for data collection [@handegard2024usvs], the need to build automated workflows automatically has increased. Increased data complexity and volumes, e.g. from broadband echo sounders, exacerbates this [@guidi2020big;@malde2020machine].
@@ -75,11 +75,12 @@ Although support for machine learning can be found in many programming languages
 
 ## LSSS and KORONA
 
-The Large Scale Survey System (LSSS) [@korneliussen2006large] is an efficient open source tool for analyzing data from acosutic trawl survceys. The system is designed to efficiently support the standard workflow for acosutic trawl surveys, where the data is manually curated during the survey. The system contains support for reading a wide range of data formats, a graphical interface to manually assign acoustic backscatter to acosutic categories as well as an echo integration step for estimating the nautical scattering coefficient per acoustic category for further use in survey estimation programs like StoX [@johnsen_stox_2019]. The software is the de facto standard for all acoustic traslw surveys conducted by the Insitute of Marine reseach. Other useres are the MRI , Iceland (ask rolf for more)
+The Large Scale Survey System (LSSS) [@korneliussen2006large] is an efficient open source tool for analyzing data from acoustic trawl surveys. The system is designed to efficiently support the standard workflow for acoustic trawl surveys, where the data is manually curated during the survey. The system contains support for reading a wide range of data formats, a graphical interface to manually assign acoustic backscatter to acoustic categories as well as an echo integration step for estimating the nautical scattering coefficient per acoustic category for further use in survey estimation programs like StoX [@johnsen_stox_2019]. The software is the *de facto* standard for all acoustic trawl surveys conducted by the Institute of Marine research. 
+<!-- Other users are the MRI , Iceland (ask rolf for more) -->
 
-LSSS integrates with a pre processing library called KORONA. KORONA is used to process the data before using the data in LSSS.
+LSSS integrates with a preprocessing library called KORONA. KORONA is used to process the data before using the data in LSSS.
 The library is comprised of a number individual modules (see Table \ref{tbl:ksmod} for the full list), offering access to a wide range of functionality and algorithms, including noise removal, broadband pulse compression, tracking, automated target classification, format conversions, etc.
-In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating them. The standard ouput from Korona is korona specific raw data files, but the library also offer importing from and and exporting to NetCdf.
+In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating them. The standard output from KORONA uses a data format based on extending the raw data format used by Kongsberg, but the library also offer data conversion, and supports importing from and and exporting to NetCDF.
 
 | List of modules          |                         |                              |
 |--------------------------|-------------------------|------------------------------|
@@ -107,23 +108,23 @@ In addition to the integration with the LSSS platform, KORONA also provides its 
 
 ## The KoronaScript programmatic interface
 
-KoronaScript is implemented as a set of Python classes that each encapsulates a KORONA procssing module.  These classes leverage two core features offered by KORONA.
+KoronaScript is implemented as a set of Python classes that each encapsulates a KORONA processing module.  These classes leverage two core features offered by KORONA.
 First, KORONA can generate a description of its modules and their parameters in the form of a JSON file.  KoronaScript parses this, and generates the corresponding Python classes.  This ensures that the KoronaScript will automatically incorporate new features provided by new releases of KORONA.
 
-Second, the KORONA user interface writes configured pipelines to XML files, which are then processed by the corresponding processing modules.  KoronaScript leverages this interface by having the classes generate the same XML ouptput as the KORONA GUI would produce.  A `KoronaScript` class lets the user organize class instances in a sequence, and calling the KORONA processing infrastructure on the generated XML specification.
+Second, the KORONA user interface writes configured pipelines to XML files, which are then processed by the corresponding processing modules.  KoronaScript leverages this interface by having the classes generate the same XML output as the KORONA GUI would produce.  A `KoronaScript` class lets the user organize class instances in a sequence, and calling the KORONA processing infrastructure on the generated XML specification.
 
 ## Availability and installation
 
-KoronaScript is available from the PYPI archive, and can be installed using `pip install koronascript`, or via other package mangemente tools for Python (e.g. Anaconda or `uv`).  The source code is available from the GitHub repository at https://github.com/CRIMAC-WP4-Machine-learning/CRIMAC-KoronaScript .
+KoronaScript is available from the PYPI archive, and can be installed using `pip install koronascript`, or via other package management tools for Python (e.g. Anaconda or `uv`).  The source code is available from the GitHub repository at https://github.com/CRIMAC-WP4-Machine-learning/CRIMAC-KoronaScript .
 
-KoronaScript will automatically download and install Korona and LSSS, so no explicit action is required by the user.
+KoronaScript will automatically download and install KORONA and LSSS, so no explicit action is required by the user.
 The latest version of the software can be downloaded separately from https://marec.no/downloads.htm or from the GitHub repository at https://github.com/marec-open-source/lsss . 
 
 # Research impact statement
 
 KORONA and LSSS have grown in popularity over time, and before it was released as Open Source been licensed for use by 22 institutes and other organizations[^1]. 
-At the Instiute of Marine Research, LSSS is used to process acoustics data from more than sixty surveys per year, 
-and KORONA functionality is instrumental for acoustic target classification, noise filtering, data regridding, format conversion.
+At the Institute of Marine Research, LSSS is used to process acoustics data from more than sixty surveys per year, 
+and KORONA functionality is instrumental for acoustic target classification, noise filtering, data regridding, and format conversion.
 
 [^1]: https://www.norceresearch.no/en/news/our-acoustic-analysis-system-for-fish-is-becoming-open-source
 
