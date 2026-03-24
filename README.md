@@ -1,4 +1,8 @@
-# Running Korona through Python
+# KoronaScript: Running Korona acoustic processing modules from Python
+
+KORONA is a framework that provides a number of processing modules for acoustic data. 
+It is distributed as part of the [LSSS](https://www.norceresearch.no/en/projects/large-scale-survey-system-lsss) application.
+KoronaScript is a Python library that lets the user configure and run KORONA modules directly from Python programs.
 
 ## Prerequisites
 
