@@ -72,20 +72,16 @@ Although support for machine learning can be found in many programming languages
 
 ## LSSS and KORONA
 
-The Large Scale Survey System (LSSS) [@korneliussen2006large] is an efficient open source tool for analyzing data from acoustic trawl surveys. The system is designed to support the standard workflow for acoustic trawl surveys, where the data is manually curated during the survey \autoref{fig:example_LSSS}. The system contains support for reading a wide range of data formats, a graphical interface to manually assign acoustic backscatter to acoustic categories as well as an echo integration step for estimating the nautical scattering coefficient per acoustic category for further use in survey estimation programs like StoX [@johnsen_stox_2019]. The software is the *de facto* standard for all acoustic trawl surveys conducted by the Institute of Marine research. 
+The Large Scale Survey System (LSSS) [@korneliussen2006large] is an efficient open source tool for analyzing data from acoustic trawl surveys. The system is designed to support the standard workflow for acoustic trawl surveys where the data is manually curated during the survey, using an interactive interface shown in Figure \ref{fig:example_LSSS}. The system contains support for reading a wide range of data formats, a graphical interface to manually assign acoustic backscatter to acoustic categories as well as an echo integration step for estimating the nautical scattering coefficient per acoustic category for further use in survey estimation programs like StoX [@johnsen_stox_2019]. The software is the *de facto* standard for all acoustic trawl surveys conducted by the Institute of Marine research. 
 <!-- Other users are the MRI , Iceland (ask rolf for more) -->
 
-
-![Interetation of echogram by means of LSSS. The red region in the echogram is connected to the three lower windows and show that the backscatter is interpreted to originate from mackerel. This is supported by the frequency-response (middle lower window) and catch of pelagic trawl PT568 (upper right window).\label{fig:figure_LSSS}](figure_LSSS.png)
-
+![Interetation of echogram by means of LSSS. The red region in the echogram is connected to the three lower windows and show that the backscatter is interpreted to originate from mackerel. This is supported by the frequency-response (middle lower window) and catch of pelagic trawl PT568 (upper right window).\label{fig:example_LSSS}](Figure_LSSS.png)
 
 LSSS integrates with a preprocessing library called KORONA. KORONA is used to process the data before using the data in LSSS.
-The library is comprised of a number individual modules (see Table \ref{tbl:ksmod} for the full list), offering access to a wide range of functionality and algorithms, including noise removal, broadband pulse compression, tracking, automated target classification \autoref{fig:example_LSSS}, format conversions, etc.
+The library is comprised of a number individual modules (see Table \ref{tbl:ksmod} for the full list), offering access to a wide range of functionality and algorithms, including noise removal, broadband pulse compression, tracking, automated target classification (see Figure \ref{fig:example_KORONA}), format conversions, etc.
 In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating them. The standard output from KORONA uses a data format based on extending the raw data format used by Kongsberg, but the library also offer data conversion, and supports importing from and and exporting to NetCDF.
 
-
-![Result of automatic species identification by means of a selection of KORONA modules. \label{fig:figure_KORONA}](figure_KORONA.png)
-
+![Result of automatic species identification by means of a selection of KORONA modules. \label{fig:example_KORONA}](Figure_ATC.png)
 
 | List of modules          |                         |                              |
 |--------------------------|-------------------------|------------------------------|
