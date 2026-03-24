@@ -36,7 +36,7 @@ bibliography: references.bib
 
 # Summary
 
-KoronaScript is a Python library that provides a programmatic interface to KORONA. KORONA is alibrary that contains a wide collection of algorithms and processing modules for acoustic data processing.  KORONA is integrated with the Large Scale Survey System (LSSS) [@korneliussen2006large], a Java based application for scientific analysis of data from acoustic equipment, including echo sounders, sonars, and hydrophones.
+KoronaScript is a Python library that provides a programmatic interface to KORONA. KORONA is a library that contains a wide collection of algorithms and processing modules for acoustic data processing.  KORONA is integrated with the Large Scale Survey System (LSSS) [@korneliussen2006large], a Java based application for scientific analysis of data from acoustic equipment, including echo sounders, sonars, and hydrophones.
 
 # Statement of need
 
@@ -118,8 +118,9 @@ Second, the KORONA user interface writes configured pipelines to XML files, whic
 
 KoronaScript is available from the PYPI archive, and can be installed using `pip install koronascript`, or via other package management tools for Python (e.g. Anaconda or `uv`).  The source code is available from the GitHub repository at https://github.com/CRIMAC-WP4-Machine-learning/CRIMAC-KoronaScript .
 
-Unless the environment variable `LSSS` is pointing to an existing installation of KORONA and LSSS, KoronaScript will automatically download them from the official web site and install them in a default location, so no explicit action is required by the user.
-If a user defined installation is preferred, the latest version of the software can be downloaded from https://marec.no/downloads.htm or from the GitHub repository at https://github.com/marec-open-source/lsss and by setting the `LSSS` environment variable.
+KoronaScript will automatically download KORONA, LSSS, and the required Java runtime from the official web site and install them in a default location, so no explicit action is required by the user.
+If a separate installation to a user defined location is preferred, the latest version of the software can be downloaded from https://marec.no/downloads.htm or from the GitHub repository at https://github.com/marec-open-source/lsss .
+The environment variable `LSSS` must then be configured to point to the installation of these packages for KoronaScript to utilize them.
 
 # Research impact statement
 
