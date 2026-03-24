@@ -1,5 +1,5 @@
 ---
-title: 'KORONA and KoronaScript: a programmable toolbox for acoustic data processing'
+title: 'KORONA and KoronaScript: a programmable toolbox for acoustics data processing'
 tags:
   - Python
   - Java
