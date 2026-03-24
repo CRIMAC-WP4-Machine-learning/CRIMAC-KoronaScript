@@ -11,7 +11,7 @@ authors:
   - name: Ketil Malde
     orcid: 0000-0001-7381-1849
     affiliation: 1
-  - name: Inge Eliassen
+  - name: Inge Kristian Eliassen
     orcid: 0009-0005-0400-3342
     affiliation: 2
   - name: Nils Olav Handegard
@@ -23,7 +23,7 @@ authors:
 affiliations:
  - name: Institute of Marine Research, Bergen, Norway
    index: 2
- - name: NORCE, Bergen, Norway
+ - name: NORCE Research AS, Bergen, Norway
 date: 2026
 bibliography: references.bib
 ---
@@ -40,7 +40,8 @@ KoronaScript is a Python library that provides a programmatic interface to KORON
 
 # Statement of need
 
-Acoustic instruments have become essential tools for marine science, and a variety of echo sounders and sonars are routinely used to explore the world below the ocean surface.  Multi-beam echo sounders map the sea floor in high detail, split beam and multi frequency echo sounders measure the abundance of fish for stock assessments, side-scan and synthetic aperture sonars can resolve objects in minute detail, ACDP measures deep sea currents.
+Acoustic instruments have become essential tools for marine science, and a variety of echo sounders and sonars are routinely used to explore the world below the ocean surface.
+A variety of acoustic insturments serve specific purposes.  For instance, multi-beam echo sounders map the sea floor in high detail, split beam and multi frequency echo sounders measure the abundance of biomass in the water column, side-scan and synthetic aperture sonars can resolve objects in minute detail, and ACDP measures deep sea currents.
 
 In parallel with the development and new and more advanced instruments, there has risen a need for algorithms and tools to effectively process the often large amounts of data produced.  Software analytics are important for tasks like noise detection and removal, data compression, bottom detection, species identification and other acoustic target classification, and integrating with related data.  Several popular software packages exist, often combining a variety of analytics with an easy to use graphical interface, including LSSS [@korneliussen2006large], HERMES and Movies3d [@trenkel2009overview], and EchoView [@EchoviewSoftware].
 
@@ -72,14 +73,14 @@ Although support for machine learning can be found in many programming languages
 
 ## LSSS and KORONA
 
-The Large Scale Survey System (LSSS) [@korneliussen2006large] is an efficient open source tool for analyzing data from acoustic trawl surveys. The system is designed to support the standard workflow for acoustic trawl surveys where the data is manually curated during the survey, using an interactive interface shown in Figure \ref{fig:example_LSSS}. The system contains support for reading a wide range of data formats, a graphical interface to manually assign acoustic backscatter to acoustic categories as well as an echo integration step for estimating the nautical scattering coefficient per acoustic category for further use in survey estimation programs like StoX [@johnsen_stox_2019]. The software is the *de facto* standard for all acoustic trawl surveys conducted by the Institute of Marine research. 
+The Large Scale Survey System (LSSS) [@korneliussen2006large] is an efficient open source tool for analyzing data from acoustic trawl surveys. The system is designed to support the standard workflow for acoustic trawl surveys where the data is manually curated during the survey, using an interactive interface shown in Figure \ref{fig:example_LSSS}. The system contains support for reading a wide range of data formats, a graphical interface to manually assign acoustic backscatter to acoustic categories as well as an echo integration step for estimating the nautical scattering coefficient per acoustic category for further use in survey estimation programs like StoX [@johnsen_stox_2019]. The software is the *de facto* standard for all acoustic trawl surveys conducted by the Institute of Marine Research. 
 <!-- Other users are the MRI , Iceland (ask rolf for more) -->
 
 ![Interetation of echogram by means of LSSS. The red region in the echogram is connected to the three lower windows and show that the backscatter is interpreted to originate from mackerel. This is supported by the frequency-response (middle lower window) and catch of pelagic trawl PT568 (upper right window).\label{fig:example_LSSS}](Figure_LSSS.png)
 
 LSSS integrates with a preprocessing library called KORONA. KORONA is used to process the data before using the data in LSSS.
 The library is comprised of a number individual modules (see Table \ref{tbl:ksmod} for the full list), offering access to a wide range of functionality and algorithms, including noise removal, broadband pulse compression, tracking, automated target classification (see Figure \ref{fig:example_KORONA}), format conversions, etc.
-In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating them. The standard output from KORONA uses a data format based on extending the raw data format used by Kongsberg, but the library also offer data conversion, and supports importing from and and exporting to NetCDF.
+In addition to the integration with the LSSS platform, KORONA also provides its own graphical user interface for configuring and orchestrating the various processing modules. The standard output from KORONA uses a data format based on extending the raw data format used by Kongsberg, but the library also offer data conversion, and supports importing from and and exporting to NetCDF.
 
 ![Result of automatic species identification by means of a selection of KORONA modules. \label{fig:example_KORONA}](Figure_ATC.png)
 
@@ -110,7 +111,7 @@ In addition to the integration with the LSSS platform, KORONA also provides its 
 ## The KoronaScript programmatic interface
 
 KoronaScript is implemented as a set of Python classes that each encapsulates a KORONA processing module.  These classes leverage two core features offered by KORONA.
-First, KORONA can generate a description of its modules and their parameters in the form of a JSON file.  KoronaScript parses this, and generates the corresponding Python classes.  This ensures that the KoronaScript will automatically incorporate new features provided by new releases of KORONA.
+First, KORONA can generate a description of its modules and their parameters in the form of a JSON file.  KoronaScript parses this file and generates the corresponding Python classes.  This ensures that the KoronaScript will automatically incorporate new features provided by new releases of KORONA.
 
 Second, the KORONA user interface writes configured pipelines to XML files, which are then processed by the corresponding processing modules.  KoronaScript leverages this interface by having the classes generate the same XML output as the KORONA GUI would produce.  A `KoronaScript` class lets the user organize class instances in a sequence, and calling the KORONA processing infrastructure on the generated XML specification.
 
