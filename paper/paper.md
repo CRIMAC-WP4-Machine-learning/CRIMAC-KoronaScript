@@ -48,7 +48,7 @@ In parallel with the development of new and more advanced instruments, there has
 
 While interactive scrutiny by expert users remains an important method to interpret acoustic data, it is often convenient or even necessary to automate the processing.  As data collection volumes increase, labor costs and expert availability become major obstacles to effective data use.  Having a programmatic interface that can be scripted is quickly becoming a necessity.
 
-Furthermore,  many important algorithms and processing modules have many tunable parameters, and a scriptable API allows these parameters to be optimized by an automated (or semi-automated) process using grid search or other schemes.  The other user can perform sensitivity analysis to evaluate the importance of each parameter, and can compare the results from different configurations to find the process that best fits a particular challenge.
+Furthermore,  many important algorithms and processing modules have many tunable parameters, and a scriptable API allows these parameters to be optimized by an automated (or semi-automated) process using grid search or other schemes.  Users can perform sensitivity analysis to evaluate the importance of each parameter, and can compare the results from different configurations to find the process that best fits a particular challenge.
 
 Finally, by embedding the analysis in a program, it can be shared, copied, and versioned (e.g.\ in GitHub), which supports reproducibility and verifiability, and is particularly useful for scientific work. The process can also be  intermixed with other processing operations, like AI-based classification models [e.g., @brautaset2020acoustic], or functionality offered by other analysis toolkits like PyEchoView [@wall2018pyecholab] or EchoPype [@lee2024interoperable].
 
@@ -132,7 +132,7 @@ and KORONA functionality is instrumental for acoustic target classification, noi
 
 [^1]: https://www.norceresearch.no/en/news/our-acoustic-analysis-system-for-fish-is-becoming-open-source
 
-KoronaScript makes the analyses easily available programmatically, and enabling systematic exploration of methods and parameters and facilitating deployment in new settings including on UAVs and in the cloud.
+KoronaScript makes the analyses easily available programmatically, thus enabling systematic exploration of methods and parameters and facilitating deployment in new settings including on UAVs and in the cloud.
 At the Institute of Marine Research, KoronaScript is rapidly becoming an indispensable tool for automating processing pipelines, and restructuring and ingestion of historical data for developing new machine learning methods.
 
 # AI usage disclosure
